@@ -7,7 +7,7 @@
     $sql .= "memberID int(10) unsigned not null,";
     $sql .= "title varchar(30) not null comment '게시글 제목',";
     $sql .= "boardPW varchar(20) comment '게시글 비밀번호',";
-    $sql .= "content longtext not null comment '게시글 내용',";
+    $sql .= "comment longtext not null comment '게시글 내용',";
     $sql .= "boardDATE datetime not null comment '게시글 올린 날짜&시각',";
     $sql .= "seen int comment '게시글 조회수',";
     $sql .= "foreign key (memberID) references member(memberID) on update cascade on delete restrict)";
