@@ -13,10 +13,11 @@
 	<meta charset="utf-8" />
 
 	<title>QnA 게시판 | nasmedia</title>
-
+  <link rel="stylesheet" href="./css/sandstone.css">
 	<link rel="stylesheet" href="./css/normalize.css" />
-
 	<link rel="stylesheet" href="./css/board.css" />
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
 </head>
 
@@ -65,7 +66,7 @@
 
             $firstLimitValue = ($numView * $page) - $numView;
 
-            $sql = "SELECT boardID, title, name, regTime FROM board ";
+            $sql = "SELECT boardID, title, writer, regTime FROM board ";
             $sql .= "ORDER BY boardID ";
             $sql .= "DESC LIMIT {$firstLimitValue}, {$numView}";
 
@@ -82,7 +83,7 @@
                   echo "<td><a href = '../board/view.php?boardID={$memberInfo['boardID']}'>";
                   echo $memberInfo['title'];
                   echo "</a></td>";
-                  echo "<td>{$memberInfo['name']}</td>";
+                  echo "<td>{$memberInfo['writer']}</td>";
                   echo "<td>{$memberInfo['regTime']}</td>";
                   echo "</tr>";
                 }

@@ -30,7 +30,7 @@
 
         $firstLimitValue = ($numView * $page) - $numView;
 
-        $sql = "SELECT boardID, title, name, regTime FROM board ";
+        $sql = "SELECT boardID, title, writer, regTime FROM board ";//조회수 추가 가능(추후)
         $sql .= "ORDER BY boardID ";
         $sql .= "DESC LIMIT {$firstLimitValue}, {$numView}";
 
@@ -48,7 +48,7 @@
               echo "<td><a href = '../board/view.php?boardID={$memberInfo['boardID']}'>";
               echo $memberInfo['title'];
               echo "</a></td>";
-              echo "<td>{$memberInfo['name']}</td>";
+              echo "<td>{$memberInfo['writer']}</td>";
               echo "<td>{$memberInfo['regTime']}</td>";
               echo "</tr>";
             }
