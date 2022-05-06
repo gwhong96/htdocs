@@ -6,7 +6,7 @@
 <html>
 <head><title>게시물 목록</title></head>
 <body>
-  <a href = "../board/write.php">글 작성하기</a>
+  <a href = "./write.php">글 작성하기</a>
 
   <table>
 

@@ -8,9 +8,11 @@
 </head>
 <body>
   <form name = "boardWrite" method = "post" action = "save.php">
+    <!-- method = post POST방식으로 데이터 전달 -->
     제목
     <br>
     <input type = "text" name = "title" required/>
+    <!-- required를 통해 null 방지 -->
     <br><br>
     작성자
     <br>
@@ -26,7 +28,7 @@
     <!--게시글 내용 입력 area (board 테이블 comment 컬럼)-->
     <br><br>
     <input type = "submit" value = "저장"/>
-    <!--작성 완료 버튼-->
+    <!--작성 완료-->
   </form>
 </body>
 </html>

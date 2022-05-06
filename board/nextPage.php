@@ -1,19 +1,19 @@
 <?php
 
-  $sql = "SELECT count(boardID) FROM board";
+  $sql = "SELECT count(boardID) FROM board";//count (pk컬럼) = 전체 row의 갯수 = 전체 게시글
   $result = $dbConnect -> query($sql);
 
-  $boardTotalCount = $result ->fetch_array(MYSQLI_ASSOC);
+  $boardTotalCount = $result ->fetch_array(MYSQLI_ASSOC);//컬럼명으로 호출
   $boardTotalCount = $boardTotalCount['count(boardID)'];//전체 게시글 수
 
   $totalPage = ceil($boardTotalCount / $numView);//총 페이지 수 (ceil 올림)
 
-  echo "<a href = '../board/list.php?page=1'>first</a>&nbsp;";
+  echo "<a href = './list_designed.php?page=1'>first</a>&nbsp;";
   //첫 페이지 이동 링크 (&nbsp 공백문자)
 
   if($page != 1){
     $previousPage = $page - 1;
-    echo "<a href='../board/list.php?page={$previousPage}'>prev</a>";
+    echo "<a href='./list_designed.php?page={$previousPage}'>prev</a>";
   }//이전 페이지 이동 링크
 
   $pageTerm = 5;//앞뒤 페이지 표시 갯수
@@ -37,16 +37,17 @@
     // if($i == $page){
     //   $nowPageColor = 'hotpink';
     // }
-    echo "&nbsp <a href = '../board/list.php?page={$i}'>{$i}</a>";
+    echo "&nbsp <a href = './list_designed.php?page={$i}'>{$i}</a>";
   }
 
   if($page != $totalPage){//다음 페이지로
 
     $nextPage = $page + 1;
-    echo "<a href = '../board/list.php?page={$nextPage}'>next</a>";
+
+    echo "&nbsp <a href = './list_designed.php?page={$nextPage}'>next</a>";
   }
 
-  echo "&nbsp;<a href = '../board/list.php?page={$totalPage}'>last</a>";//마지막 페이지로
+  echo "&nbsp;<a href = './list_designed.php?page={$totalPage}'>last</a>";//마지막 페이지로
 
 
 

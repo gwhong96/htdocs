@@ -1,6 +1,7 @@
 <?php
 
-  include $_SERVER['DOCUMENT_ROOT'].'../board/connectDB.php';
+  include $_SERVER['DOCUMENT_ROOT'].'../board/connectDB.php';//절대경로 기준
+  // include('connectDB.php');//대상 php파일이 같은 경로에 있다면 가능
 
   $title = $_POST['title'];
   $content = $_POST['content'];
