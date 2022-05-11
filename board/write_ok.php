@@ -8,6 +8,7 @@
   $content = $_POST['content'];
   // $name = $_POST['name'];
   $disYN = $_POST['disYN'];//공개여부
+  $boardPW = $_POST['boardPW'];
 
   if($title != null && $title != ''){//폼 체크
     $title = $dbConnect->real_escape_string($title);//title 내에 따옴표 같은 문자를 escape처리
@@ -25,15 +26,15 @@
     exit;
   }
 
-  $regTime = date("Y-m-d H:i:s");//등록시간
+  $regTime = date("Y-m-d H:i:s");//등록시간(timezone 설정 확인)
 
-  $memberID = $_SESSION['memberID'];
+  $memberID = $_SESSION['memberID'];//현재 로그인한 회원의 ID
 
   $title = htmlspecialchars($title);
   $content = htmlspecialchars($content);//xss 방어를 위해 함수를 적용한뒤 DB에 저장
 
-  $sql = "INSERT INTO board (title, memberID, content, disYN, regTime)";
-  $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}','{$regTime}')";
+  $sql = "INSERT INTO board (title, memberID, content, disYN, boardPW, regTime)";
+  $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}', '{$boardPW}','{$regTime}')";
   $result = $dbConnect->query($sql);//입력 받은 값을 쿼리문을 통해 DB로 전달
 
   if($result){

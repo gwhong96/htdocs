@@ -74,7 +74,7 @@ table.type11 td:hover {  background: #555;}
 
             $firstLimitValue = ($numView * $page) - $numView;
 
-            $sql = "SELECT boardID, title, member.nickName, board.regTime, board.views FROM board JOIN member ";
+            $sql = "SELECT boardID, title, member.nickName, board.regTime, board.views, board.disYN FROM board JOIN member ";
             $sql .= "ON board.memberID = member.memberId ";
             $sql .= "WHERE board.delYN = 'N' ";
             // $sql = "SELECT boardID, title, writer, regTime FROM board ";
@@ -90,12 +90,16 @@ table.type11 td:hover {  background: #555;}
                 for($i = 0; $i < $dataCount; $i++){
                   $memberInfo = $result->fetch_array(MYSQLI_ASSOC);
                   // $title = htmlspecialchars($memberInfo['title']);
-
                   echo "<tr>";
                   echo "<td>".$memberInfo['boardID']."</td>";
                   echo "<td><a href = '../board/view.php?boardID={$memberInfo['boardID']}'>";//상세보기 페이지 이동링크
-                  // echo $title;
                   echo $memberInfo['title'];
+
+                  if($memberInfo['disYN'] = 'N'){//비공개 글 자물쇠 아이콘 적용
+                    echo "<img src = '../img/lock.png' title = 'lock' width = '20' height ='20' />";
+                  }
+
+                  // echo $title;
                   echo "</a></td>";
                   echo "<td>{$memberInfo['nickName']}</td>";
                   // echo "<td><script>alert('asdad')</script></td>";

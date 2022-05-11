@@ -7,9 +7,10 @@
   $nickName = $_POST['userNickName'];
   $pw = $_POST['userPW'];
   $gender = $_POST['gender'];
-  $birthYear = $_POST['birthYear'];
-  $birthMonth = $_POST['birthMonth'];
-  $birthDay = $_POST['birthDay'];
+  $birth = $_POST['birth'];
+  // $birthYear = $_POST['birthYear'];
+  // $birthMonth = $_POST['birthMonth'];
+  // $birthDay = $_POST['birthDay'];
 
   function goSignUpPage($alert){//입력값이 적합하지 않을 시 다시 회원가입 페이지로 이동
     echo $alert.'<br>';
@@ -33,20 +34,24 @@
   $pw = hash('sha256', 'nasmedia'.$pw);//비밀번호 앞에 임의의 문자열을 붙여서 암호화
 
   //년 월 일 입력값 유무 체크
-  if($birthYear == 0){
-    goSignUpPage('생년을 정확히 입력해 주세요.');
-    exit;
-  }
-  if($birthMonth == 0){
-    goSignUpPage('생월을 정확히 입력해 주세요.');
-    exit;
-  }
-  if($birthDay == 0){
-    goSignUpPage('생일을 정확히 입력해 주세요.');
-    exit;
-  }
+  // if($birthYear == 0){
+  //   goSignUpPage('생년을 정확히 입력해 주세요.');
+  //   exit;
+  // }
+  // if($birthMonth == 0){
+  //   goSignUpPage('생월을 정확히 입력해 주세요.');
+  //   exit;
+  // }
+  // if($birthDay == 0){
+  //   goSignUpPage('생일을 정확히 입력해 주세요.');
+  //   exit;
+  // }
 
-  $birth = $birthYear.'-'.$birthMonth.'-'.$birthDay;//date형식에 맞게 문자열 통합
+    if($birth ==0){
+      goSignUpPage('생년월일을 입력해 주세요.');
+    }
+
+  // $birth = $birthYear.'-'.$birthMonth.'-'.$birthDay;//date형식에 맞게 문자열 통합
 
   $isEmailCheck = false;//이메일 중복 검사용 변수 (default = false)
 

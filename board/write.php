@@ -1,6 +1,7 @@
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
+  include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
  ?>
 
  <!doctype html>
@@ -10,6 +11,7 @@
 <body>
   <form name = "boardWrite" method = "post" action = "./write_ok.php">
     <!-- method = post POST방식으로 데이터 전달 -->
+    <br>
     제목
     <br>
     <input type = "text" name = "title" required/>
@@ -28,10 +30,9 @@
     <textarea name = "content" cols = "80" rows = "10" required></textarea>
     <!--게시글 내용 입력 area (board 테이블 comment 컬럼)-->
     <br><br>
-    공개 여부
-    <input type = "radio" class = "radio-val" name = "disYN" value = "Y" checked>공개
-    <input type = "radio" class = "radio-val" name = "disYN" value = "N">비공개<br>
-    비밀번호 <input type = "text" class = "radio-pw" name = "disYN">
+    비공개
+    <input type = "checkbox" name = "disYN" value = "N">
+    비밀번호 <input type = "text" name = "boardPW">
     <br><br>
     <input type = "submit" value = "저장"/>
     <!--작성 완료-->

@@ -1,6 +1,17 @@
 <!doctype html>
 <html>
 <head><title>Sign Up</title></head>
+
+<!-- jQuery 기본 js파일 -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+<!-- jQuery UI 라이브러리 js파일 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script>
+$(function(){ //jquery  달력 UI위젯 datepicker
+      $("#birthUI").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
+  });
+</script>
 <body>
   <h1>Sign Up</h1>
   <form name = "signUp" method = "post" action="./signUp.php">
@@ -17,9 +28,10 @@
     <input type = "password" name = "userPW" required>
     <br><br>
     생일<br>
+    <input type = "text" id= "birthUI" name = "birth">
 
-    <!-- slect문을 이용한 선택 스크롤 -->
-    <select name = "birthYear" required>
+    <!-- slect문을 이용한 생일 선택 스크롤 -->
+    <!-- <select name = "birthYear" required>
     <?php
     $thisYear = date('Y', time());
 
@@ -43,7 +55,7 @@
           echo "<option value='{$i}'>{$i}</option>";
         }
     ?>
-    </select>일
+    </select>일 -->
 
     <br><br>
     <input type = "submit" value = "가입하기"/>
