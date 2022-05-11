@@ -1,10 +1,10 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
-include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
+// include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
 include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
 
-  $searchKeyword = $dbConnect -> real_escape_string($_POST['searchKeyword']);//real_escape_string = injection 방지
-  $searchOption = $dbConnect -> real_escape_string($_POST['option']);
+  $searchKeyword = $dbConnect -> real_escape_string($_GET['searchKeyword']);//real_escape_string = injection 방지
+  $searchOption = $dbConnect -> real_escape_string($_GET['option']);
 
   if($searchKeyword == '' || $searchKeyword == null){
     echo "검색어가 없습니다.";
@@ -14,7 +14,7 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
   switch($searchOption){
     case 'title':
     case 'content':
-    case 'tandc':
+    case 'writer':
     case 'torc':
       break;
     default:
@@ -23,7 +23,7 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
       break;
   }
 
-  $sql = "SELECT b.boardID, b.title, m.nickName, b.regTime, views FROM board b ";
+  $sql = "SELECT b.boardID, b.title, m.nickName, b.regTime, b.views FROM board b ";
   $sql .= "JOIN member m on (m.memberID = b.memberID) ";
 
   switch($searchOption){
@@ -31,11 +31,14 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
       $sql .= "WHERE b.title LIKE '%{$searchKeyword}%'";// 키워드가 속한 모든 내용
       break;
     case 'content':
-      $sql .= "WHERE b.content LIKE '%{$searchKeyword}%'";// 키워드가 속한 모든 내용
+      $sql .= "WHERE b.content LIKE '%{$searchKeyword}%'";
       break;
-    case 'tandc':
-      $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' AND b.content LIKE '%{$searchKeyword}%'";
+    case 'writer':
+      $sql .= "WHERE m.nickName LIKE '%{$searchKeyword}%'";//작성자 검색
       break;
+    // case 'tandc':
+    //   $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' AND b.content LIKE '%{$searchKeyword}%'";
+    //   break;
     case 'torc':
       $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' OR b.content LIKE '%{$searchKeyword}%'";
       break;

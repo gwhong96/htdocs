@@ -61,6 +61,27 @@ table.type11 td:hover {  background: #555;}
 			<tbody>
 
 					<?php
+          //검색
+          if(isset($_GET['searchKeyword'])){
+            $searchKeyword = $_GET['searchKeyword'];
+            $searchOption = $_GET['option'];
+
+            if($searchKeyword == '' || $searchKeyword == null){
+              echo "검색어가 없습니다.";
+              exit;
+            }
+            switch($searchOption){
+              case 'title':
+              case 'content':
+              case 'writer':
+              case 'torc':
+                break;
+              default:
+                echo "검색 옵션이 없습니다.";
+                exit;
+                break;
+            }
+          }
 
             if(isset($_GET['page'])){
               $page = (int) $_GET['page'];//GET 형식을 통해 boardID전달
@@ -73,9 +94,25 @@ table.type11 td:hover {  background: #555;}
 
             $firstLimitValue = ($numView * $page) - $numView;
 
-            $sql = "SELECT boardID, title, member.nickName, board.regTime, board.views, board.disYN FROM board JOIN member ";
-            $sql .= "ON board.memberID = member.memberId ";
-            $sql .= "WHERE board.delYN = 'N' ";
+            $sql = "SELECT boardID, title, m.nickName, b.regTime, b.views, b.disYN FROM board b JOIN member m ";
+            $sql .= "ON (b.memberID = m.memberId) ";
+
+            switch($searchOption){//검색 옵션별 where 쿼리
+              case 'title':
+                $sql .= "WHERE title LIKE '%{$searchKeyword}%'";// 키워드가 속한 모든 내용
+                break;
+              case 'content':
+                $sql .= "WHERE b.content LIKE '%{$searchKeyword}%'";
+                break;
+              case 'writer':
+                $sql .= "WHERE m.nickName LIKE '%{$searchKeyword}%'";//작성자 검색
+                break;
+              case 'torc':
+                $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' OR b.content LIKE '%{$searchKeyword}%'";
+                break;
+            }
+
+            $sql .= " AND b.delYN = 'N' ";
             // $sql = "SELECT boardID, title, writer, regTime FROM board ";
             $sql .= "ORDER BY boardID ";
             $sql .= "DESC LIMIT {$firstLimitValue}, {$numView}";
@@ -122,6 +159,7 @@ table.type11 td:hover {  background: #555;}
   <?php
     include $_SERVER['DOCUMENT_ROOT'].'../board/paging.php';
     include $_SERVER['DOCUMENT_ROOT'].'../board/search.php';
+
    ?>
 
 </body>
