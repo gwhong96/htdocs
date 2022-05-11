@@ -1,5 +1,4 @@
 <?php
-
 	// require_once("../dbconfig.php");
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
@@ -121,7 +120,7 @@ table.type11 td:hover {  background: #555;}
 	</article>
 
   <?php
-    include $_SERVER['DOCUMENT_ROOT'].'../board/nextPage.php';
+    include $_SERVER['DOCUMENT_ROOT'].'../board/paging.php';
     include $_SERVER['DOCUMENT_ROOT'].'../board/search.php';
    ?>
 

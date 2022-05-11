@@ -3,7 +3,7 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
 
-  $boardID = $_GET['boardID'];
+  // $boardID = $_GET['boardID'];
   $title = $_POST['title'];
   $content = $_POST['content'];
   // $name = $_POST['name'];

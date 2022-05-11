@@ -32,9 +32,15 @@
 
   $title = htmlspecialchars($title);
   $content = htmlspecialchars($content);//xss 방어를 위해 함수를 적용한뒤 DB에 저장
+  if(isset($_GET['boardID'])){
+    $boardID = $_GET['boardID'];
+    $sql = "UPDATE board SET title = '{$title}', content = '{$content}', disYN = '{$disYN}' ";
+    $sql .= "WHERE boardID = ".$boardID;
+  }else{
+    $sql = "INSERT INTO board (title, memberID, content, disYN, boardPW, regTime)";
+    $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}', '{$boardPW}','{$regTime}')";
+  }
 
-  $sql = "INSERT INTO board (title, memberID, content, disYN, boardPW, regTime)";
-  $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}', '{$boardPW}','{$regTime}')";
   $result = $dbConnect->query($sql);//입력 받은 값을 쿼리문을 통해 DB로 전달
 
   if($result){

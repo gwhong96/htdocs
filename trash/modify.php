@@ -28,24 +28,14 @@
 </head>
 <body>
   <form name = "boardWrite" method = "post" action = "./modify_ok.php?boardID=<?= $boardID ?>">
-    <!-- method = post POST방식으로 데이터 전달 -->
     제목
     <br>
     <input type = "text" name = "title" required value = "<?=$boardInfo['title']?>"></input>
-    <!-- required를 통해 null 방지 -->
-    <!-- <br><br>
-    작성자
-    <br>
-    <input type = "text" name = "name" required/> -->
-    <!-- <br><br>
-    게시글 PW
-    <br>
-    <input type = "text" name = "boardPW" required/> -->
     <br><br>
     내용
     <br>
     <textarea name = "content" cols = "80" rows = "10" required><?=$boardInfo['content']?></textarea>
-    <!--게시글 내용 입력 area (board 테이블 comment 컬럼)-->
+
     <br><br>
 
     공개 여부

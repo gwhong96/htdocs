@@ -1,6 +1,6 @@
 <?php
 
-  $sql = "SELECT count(boardID) FROM board";//count (pk컬럼) = 전체 row의 갯수 = 전체 게시글
+  $sql = "SELECT count(boardID) FROM board WHERE delYN = 'N'";//count (pk컬럼) = 전체 row의 갯수 = 전체 게시글
   $result = $dbConnect -> query($sql);
 
   $boardTotalCount = $result ->fetch_array(MYSQLI_ASSOC);//컬럼명으로 호출
@@ -26,31 +26,24 @@
 
   $lastPage = $page + $pageTerm;
 
-
   if($lastPage >= $totalPage){
     $lastPage = $totalPage;
   }//마지막 페이지 표시가 실제 페이지 최대 갯수보다 많을경우
 
-  for($i = $startPage; $i < $lastPage; $i++){
-    // $nowPageColor = 'unset';
-    // if($i == $page){
-    //   $nowPageColor = 'hotpink';
-    // }
+  for($i = $startPage; $i <= $lastPage; $i++){
+
     echo "&nbsp <a href = './list_designed.php?page={$i}'>{$i}</a>";
 
   }
 
+  // $totalPage = $totalPage + 1;
 
-
-  if($page = $totalPage){//다음 페이지가 있다면
-
-  }else{
+  if($page != $totalPage){//다음 페이지가 있다면
     $nextPage = $page + 1;
     echo "&nbsp; <a href = './list_designed.php?page={$nextPage}'>next</a>";//다음페이지 버튼 활성화
   }
 
 
   echo "&nbsp;&nbsp;&nbsp;<a href = './list_designed.php?page={$totalPage}'>last</a>";
-
 
  ?>

@@ -33,19 +33,6 @@
   //해시알고리즘을 통한 비밀번호 암호화
   $pw = hash('sha256', 'nasmedia'.$pw);//비밀번호 앞에 임의의 문자열을 붙여서 암호화
 
-  //년 월 일 입력값 유무 체크
-  // if($birthYear == 0){
-  //   goSignUpPage('생년을 정확히 입력해 주세요.');
-  //   exit;
-  // }
-  // if($birthMonth == 0){
-  //   goSignUpPage('생월을 정확히 입력해 주세요.');
-  //   exit;
-  // }
-  // if($birthDay == 0){
-  //   goSignUpPage('생일을 정확히 입력해 주세요.');
-  //   exit;
-  // }
 
     if($birth ==0){
       goSignUpPage('생년월일을 입력해 주세요.');

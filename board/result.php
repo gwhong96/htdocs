@@ -3,7 +3,7 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
 include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
 include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
 
-  $searchKeyword = $dbConnect -> real_escape_string($_POST['searchKeyword']);
+  $searchKeyword = $dbConnect -> real_escape_string($_POST['searchKeyword']);//real_escape_string = injection 방지
   $searchOption = $dbConnect -> real_escape_string($_POST['option']);
 
   if($searchKeyword == '' || $searchKeyword == null){
@@ -23,7 +23,7 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
       break;
   }
 
-  $sql = "SELECT b.boardID, b.title, m.nickName, b.regTime FROM board b ";
+  $sql = "SELECT b.boardID, b.title, m.nickName, b.regTime, views FROM board b ";
   $sql .= "JOIN member m on (m.memberID = b.memberID) ";
 
   switch($searchOption){

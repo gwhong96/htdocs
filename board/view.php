@@ -29,7 +29,7 @@
       <?= $contentInfo['lastUpdate']."<br>"?>
       <?= "<a href = './list_designed.php'>목록으로 이동</a>"?>
       <!-- <?= "<a href = './modify.php'>게시글 수정</a>"?> -->
-      <?= "<a href = '../board/modify.php?boardID={$boardID}'>게시글 수정" ?>
+      <?= "<a href = '../board/write.php?boardID={$boardID}'>게시글 수정" ?>
       <?= "<a href = '../board/delete.php?boardID={$boardID}'>게시글 삭제" ?>
 
     <?php
