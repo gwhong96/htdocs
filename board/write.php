@@ -1,3 +1,4 @@
+<!-- 게시글 작성 및 수정 폼 -->
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';

@@ -1,4 +1,4 @@
-
+<!--검색 폼-->
 
 <form name = "search" method = "get" action = "./list_designed.php">
   <br>

@@ -17,8 +17,7 @@
         break;
     }}
     $sql .=" AND delYN = 'N'";
-
-
+    
   $result = $dbConnect -> query($sql);
 
   $boardTotalCount = $result ->fetch_array(MYSQLI_ASSOC);//컬럼명으로 호출
@@ -58,15 +57,10 @@
     echo "&nbsp <a href = './list_designed.php?page={$i}{$link}'>{$i}</a>";
 
   }
-
-  // $totalPage = $totalPage + 1;
-
   if($page != $totalPage){//다음 페이지가 있다면
     $nextPage = $page + 1;
     echo "&nbsp; <a href = './list_designed.php?page={$nextPage}{$link}'>next</a>";//다음페이지 버튼 활성화
   }
-
-
   echo "&nbsp;&nbsp;&nbsp;<a href = './list_designed.php?page={$totalPage}{$link}'>last</a>";
 
  ?>

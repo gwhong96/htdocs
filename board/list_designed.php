@@ -161,20 +161,13 @@ table.type11 td:hover {  background: #555;}
               }
             }
 					?>
-
-
 			</tbody>
-
 		</table>
-
 	</article>
 
   <?php
     include $_SERVER['DOCUMENT_ROOT'].'../board/paging.php';
     include $_SERVER['DOCUMENT_ROOT'].'../board/search.php';
-
    ?>
-
 </body>
-
 </html>

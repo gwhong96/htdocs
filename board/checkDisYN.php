@@ -1,3 +1,4 @@
+<!-- 비공개 게시물 비밀번호 체크 -->
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';

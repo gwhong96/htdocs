@@ -1,3 +1,4 @@
+<!-- 회원가입 폼 -->
 <!doctype html>
 <html>
 <head><title>Sign Up</title></head>

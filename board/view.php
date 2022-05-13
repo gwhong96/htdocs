@@ -1,3 +1,4 @@
+<!-- 게시글 상세보기 -->
 <?php
 
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';

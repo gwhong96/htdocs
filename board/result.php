@@ -1,3 +1,4 @@
+<!-- 검색 -->
 <?php
 include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
 // include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';

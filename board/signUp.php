@@ -1,3 +1,4 @@
+<!-- 회원가입 -->
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';//회원가입 성공 시 세션 생성을 위한 include
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';//db접속을 위한 include

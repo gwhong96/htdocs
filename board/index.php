@@ -1,3 +1,4 @@
+<!-- 초기화면 -->
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
 ?>
