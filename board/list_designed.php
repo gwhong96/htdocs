@@ -124,23 +124,31 @@ table.type11 td:hover {  background: #555;}
 
             $result = $dbConnect->query($sql);//페이징이나 검색조건에 부합하는 값들만이 담
 
+            $sqlCount = "SELECT count(boardID) FROM board WHERE delYN = 'N';";
+            $totalCount = $dbConnect -> query($sqlCount);
+            $totalCount = $totalCount -> fetch_array(MYSQLI_ASSOC);
+            // print_r ($totalCount['count(boardID)']);//총 게시물 갯수
+
+
             if($result){
               $dataCount = $result->num_rows;
-
               if($dataCount>0){
                 for($i = 0; $i < $dataCount; $i++){
                   $memberInfo = $result->fetch_array(MYSQLI_ASSOC);
                   // $title = htmlspecialchars($memberInfo['title']);
                   echo "<tr>";
-                  echo "<td>".$i."</td>";
-                  echo "<td><a href = '../board/view.php?boardID={$memberInfo['boardID']}'>";//상세보기 페이지 이동링크
-                  echo $memberInfo['title'];
+                  echo "<td>".($totalCount['count(boardID)']-$i-(($page-1)*$dataCount))."</td>";//총 게시글 수 boardID와 무관하게 역순정렬
 
-                  if($memberInfo['disYN'] == 'N'){//비공개 글 자물쇠 아이콘 적용
-                    echo "<img src = '../img/lock.png' title = 'lock' width = '20' height ='20' />";
+                  if($memberInfo['disYN'] == 'N'){//비공개 일 시
+                      echo "<td><a href = '../board/checkDisYN.php?boardID={$memberInfo['boardID']}'>";//게시글 비밀번호 확인 페이지
+                      echo "<img src = '../img/lock.png' title = 'lock' width = '20' height ='20' />";
+                  }else{
+                      echo "<td><a href = '../board/view.php?boardID={$memberInfo['boardID']}'>";//상세보기 페이지 이동링크
+
                   }
 
-                  // echo $title;
+                  echo $memberInfo['title'];
+
                   echo "</a></td>";
                   echo "<td>{$memberInfo['nickName']}</td>";
                   // echo "<td><script>alert('asdad')</script></td>";

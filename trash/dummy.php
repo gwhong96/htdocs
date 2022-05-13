@@ -2,10 +2,12 @@
 
   include $_SERVER['DOCUMENT_ROOT'].'../board/connectDB.php';
 
-  for ($i = 1; $i <= 100; $i++){
-    $time = time();
-    $sql = "INSERT INTO board (memberID, title, content, regTime) ";
-    $sql .= "VALUES(1,'{$i}번째 제목', '{$i}번째 내용', {$time})";
+  $regTime = date("Y-m-d H:i:s");//등록시간(timezone 설정 확인)
+
+  for ($i = 2; $i <= 10; $i++){
+
+    $sql = "INSERT INTO board (memberID, title, content, regTime, delYN, boardPW, disYN) ";
+    $sql .= "VALUES('tester{$i}','{$i}번째 게시글', '{$i}번째 내용', '{$regTime}', 'N', '1234', 'Y') ";
     $result = $dbConnect -> query($sql);
 
     if($result){

@@ -1,9 +1,8 @@
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
-  include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';//절대경로 기준
-  // include('connectDB.php');//대상 php파일이 같은 경로에 있다면 가능
-
+  include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
+  
   $title = $_POST['title'];
   $content = $_POST['content'];
   // $name = $_POST['name'];
@@ -41,14 +40,14 @@
   if($_POST['boardID'] != ''){//게시글 수정시
 
     $boardID = $_POST['boardID'];
-    $sql = "UPDATE board SET title = '{$title}', content = '{$content}', disYN = '{$disYN}' ";
+    $sql = "UPDATE board SET title = '{$title}', content = '{$content}', disYN = '{$disYN}', lastUpdate = '{$regTime}' ";
     $sql .= "WHERE boardID = ".$boardID;
   }else{//게시글 신규 작성시
 
     $sql = "INSERT INTO board (title, memberID, content, disYN, boardPW, regTime)";
     $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}', '{$boardPW}','{$regTime}')";
   }
-  
+
   $result = $dbConnect->query($sql);//입력 받은 값을 쿼리문을 통해 DB로 전달
 
   if($result){

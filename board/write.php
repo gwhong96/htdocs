@@ -15,11 +15,23 @@
   $boardID = '';
   // echo $_GET['boardID'];
   if(isset($_GET['boardID'])){
+    $boardID = $_GET['boardID'];
+    $sql = "SELECT m.memberID FROM member m JOIN board b ON (m.memberID = b.memberID) WHERE boardID = "."$boardID";
+    $result2 = $dbConnect -> query($sql);
+    $boardInfo2 = $result2 -> fetch_array(MYSQLI_ASSOC);
+
+    if($boardInfo2['memberID'] == $_SESSION['memberID']){//현재 로그인 계정과 게시글 작성자가 같을때
       echo "게시글 수정";
       $boardID = $_GET['boardID'];
       $sql = "select * from board where boardID = {$boardID}";
       $result = $dbConnect -> query($sql);
       $boardInfo = $result -> fetch_array(MYSQLI_ASSOC);
+    }else{
+      echo "수정 권한이 없습니다."."<br>";
+      echo "<a href = './list_designed.php'> 게시글 목록으로 돌아가기</a>";
+      exit;
+    }
+
     }else{
       echo "게시글 작성";
     }
