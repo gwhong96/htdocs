@@ -32,6 +32,7 @@ table.type11 td:hover {  background: #555;}
 
   <a href = "./write.php">글 작성하기</a>
   <a href = "./signOut.php">로그아웃</a>
+  <a href = "./list_designed.php">초기화</a>
 	<article class="boardArticle">
 
 		<h3>QnA</h3>
@@ -97,27 +98,31 @@ table.type11 td:hover {  background: #555;}
             $sql = "SELECT boardID, title, m.nickName, b.regTime, b.views, b.disYN FROM board b JOIN member m ";
             $sql .= "ON (b.memberID = m.memberId) ";
 
-            switch($searchOption){//검색 옵션별 where 쿼리
-              case 'title':
-                $sql .= "WHERE title LIKE '%{$searchKeyword}%'";// 키워드가 속한 모든 내용
-                break;
-              case 'content':
-                $sql .= "WHERE b.content LIKE '%{$searchKeyword}%'";
-                break;
-              case 'writer':
-                $sql .= "WHERE m.nickName LIKE '%{$searchKeyword}%'";//작성자 검색
-                break;
-              case 'torc':
-                $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' OR b.content LIKE '%{$searchKeyword}%'";
-                break;
+            if(isset($_GET['searchKeyword'])){
+              switch($searchOption){//검색 옵션별 where 쿼리
+                case 'title':
+                  $sql .= "WHERE title LIKE '%{$searchKeyword}%'";// 키워드가 속한 모든 내용
+                  break;
+                case 'content':
+                  $sql .= "WHERE b.content LIKE '%{$searchKeyword}%'";
+                  break;
+                case 'writer':
+                  $sql .= "WHERE m.nickName LIKE '%{$searchKeyword}%'";//작성자 검색
+                  break;
+                case 'torc':
+                  $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' OR b.content LIKE '%{$searchKeyword}%'";
+                  break;
+              }
+                $sql .= " AND b.delYN = 'N' ";
+            }else{
+              $sql .= "WHERE b.delYN = 'N' ";
             }
 
-            $sql .= " AND b.delYN = 'N' ";
             // $sql = "SELECT boardID, title, writer, regTime FROM board ";
             $sql .= "ORDER BY boardID ";
             $sql .= "DESC LIMIT {$firstLimitValue}, {$numView}";
 
-            $result = $dbConnect->query($sql);
+            $result = $dbConnect->query($sql);//페이징이나 검색조건에 부합하는 값들만이 담
 
             if($result){
               $dataCount = $result->num_rows;
@@ -127,11 +132,11 @@ table.type11 td:hover {  background: #555;}
                   $memberInfo = $result->fetch_array(MYSQLI_ASSOC);
                   // $title = htmlspecialchars($memberInfo['title']);
                   echo "<tr>";
-                  echo "<td>".$memberInfo['boardID']."</td>";
+                  echo "<td>".$i."</td>";
                   echo "<td><a href = '../board/view.php?boardID={$memberInfo['boardID']}'>";//상세보기 페이지 이동링크
                   echo $memberInfo['title'];
 
-                  if($memberInfo['disYN'] = 'N'){//비공개 글 자물쇠 아이콘 적용
+                  if($memberInfo['disYN'] == 'N'){//비공개 글 자물쇠 아이콘 적용
                     echo "<img src = '../img/lock.png' title = 'lock' width = '20' height ='20' />";
                   }
 

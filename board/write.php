@@ -13,6 +13,7 @@
   <?php
   $boardInfo = array();
   $boardID = '';
+  // echo $_GET['boardID'];
   if(isset($_GET['boardID'])){
       echo "게시글 수정";
       $boardID = $_GET['boardID'];
@@ -25,7 +26,7 @@
     // print_r( $boardInfo);
    ?>
    <form name = "boardWrite" method = "post" action = "./write_ok.php">
-     <input type="hidden" value="<?=$boardID?>" name = "boardID">
+     <input type="hidden" value='<?=$boardID?>' name = "boardID">
      제목
      <br>
      <input type = "text" name = "title" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
@@ -35,7 +36,18 @@
      <textarea name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
      <br><br>
      비공개
-     <input type = "checkbox" name = "disYN" value = "N">
+     <?php
+     if(isset($boardInfo['disYN'])){//게시글 수정일때
+
+       if($boardInfo['disYN'] == 'N'){
+         $checkYN = "checked";//기존 공개여부가 N이면 체크
+       }else{
+         $checkYN = "";
+       }
+     }else{$checkYN = "";}//게시글 작성일땐 체크 안함
+     ?>
+     <input type = "checkbox" name = "disYN" value = "N" <?= $checkYN ?>/>
+     <br>
      비밀번호 <input type = "text" name = "boardPW">
      <br><br>
      <input type = "submit" value = "저장"/>
