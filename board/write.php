@@ -1,4 +1,7 @@
 <?php
+  include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
+  include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
+  include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
 
  ?>
 
@@ -7,28 +10,50 @@
  <head>
 </head>
 <body>
-  <form name = "boardWrite" method = "post" action = "save.php">
-    <!-- method = post POST방식으로 데이터 전달 -->
-    제목
-    <br>
-    <input type = "text" name = "title" required/>
-    <!-- required를 통해 null 방지 -->
-    <br><br>
-    작성자
-    <br>
-    <input type = "text" name = "name" required/>
-    <!-- <br><br>
-    게시글 PW
-    <br>
-    <input type = "text" name = "boardPW" required/> -->
-    <br><br>
-    내용
-    <br>
-    <textarea name = "content" cols = "80" rows = "10" required></textarea>
-    <!--게시글 내용 입력 area (board 테이블 comment 컬럼)-->
-    <br><br>
-    <input type = "submit" value = "저장"/>
-    <!--작성 완료-->
-  </form>
+  <?php
+  $boardInfo = array();
+  $boardID = '';
+  // echo $_GET['boardID'];
+  if(isset($_GET['boardID'])){
+      echo "게시글 수정";
+      $boardID = $_GET['boardID'];
+      $sql = "select * from board where boardID = {$boardID}";
+      $result = $dbConnect -> query($sql);
+      $boardInfo = $result -> fetch_array(MYSQLI_ASSOC);
+    }else{
+      echo "게시글 작성";
+    }
+    // print_r( $boardInfo);
+   ?>
+   <form name = "boardWrite" method = "post" action = "./write_ok.php">
+     <input type="hidden" value='<?=$boardID?>' name = "boardID">
+     제목
+     <br>
+     <input type = "text" name = "title" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
+     <br><br>
+     내용
+     <br>
+     <textarea name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+     <br><br>
+     비공개
+     <?php
+     if(isset($boardInfo['disYN'])){//게시글 수정일때
+
+       if($boardInfo['disYN'] == 'N'){
+         $checkYN = "checked";//기존 공개여부가 N이면 체크
+       }else{
+         $checkYN = "";
+       }
+     }else{$checkYN = "";}//게시글 작성일땐 체크 안함
+     ?>
+     <input type = "checkbox" name = "disYN" value = "N" <?= $checkYN ?>/>
+     <br>
+     비밀번호 <input type = "text" name = "boardPW">
+     <br><br>
+     <input type = "submit" value = "저장"/>
+     <!--작성 완료-->
+   </form>
+
+
 </body>
 </html>
