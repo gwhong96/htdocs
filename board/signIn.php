@@ -2,6 +2,7 @@
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
+  include $_SERVER['DOCUMENT_ROOT'].'./board/func/passwordCheck';
 
   $email = $_POST['userEmail'];//signInForm에서 받아온 데이터
   $pw = $_POST['userPW'];

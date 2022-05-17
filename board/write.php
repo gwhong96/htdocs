@@ -33,9 +33,9 @@
       exit;
     }
 
-    }else{
-      echo "게시글 작성";
-    }
+  }else{
+    echo "게시글 작성";
+  }
     // print_r( $boardInfo);
    ?>
    <form name = "boardWrite" method = "post" action = "./write_ok.php">

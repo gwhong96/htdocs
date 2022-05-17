@@ -73,13 +73,9 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
 	<article class="boardArticle">
 
     <table>
-
       <caption class="readHide">QnA</caption>
-
       <thead>
-
         <tr>
-
           <th scope="col" class="no">번호</th>
 
           <th scope="col" class="title">제목</th>
@@ -89,9 +85,7 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
           <th scope="col" class="date">작성일</th>
 
           <th scope="col" class="hit">조회수</th>
-
         </tr>
-
       </thead>
       <tbody>
         <?php
