@@ -21,7 +21,7 @@
   if($title != null && $title != ''){//폼 체크
     $title = $dbConnect->real_escape_string($title);//title 내에 따옴표 같은 문자를 escape처리
   }else{//(글 제목이 비어있거나 공백문자면 다시 작성 페이지 호출)
-    echo "제목을 입력하시오.";
+    echo "제목을 입력하세요.";
     echo "<a href = './write.php'>작성 페이지로 이동 </a>";
     exit;
   }
@@ -48,8 +48,8 @@
     $sql .= "WHERE boardID = ".$boardID;
   }else{//게시글 신규 작성시
 
-    $sql = "INSERT INTO board (title, memberID, content, disYN, boardPW, regTime)";
-    $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}', '{$boardPW}','{$regTime}')";
+    $sql = "INSERT INTO board (title, memberID, content, disYN, boardPW, regTime, lastUpdate)";
+    $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}', '{$boardPW}','{$regTime}','{$regTime}')";
   }
 
   $result = $dbConnect->query($sql);//입력 받은 값을 쿼리문을 통해 DB로 전달

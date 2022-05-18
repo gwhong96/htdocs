@@ -1,11 +1,18 @@
 <!-- 게시글 상세보기 -->
 <?php
-
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/xss.php';
+  ?>
 
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+
+<?php
   if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){//이전 페이지의 url정보
     $referer=$_SERVER['HTTP_REFERER'];
   }else{
@@ -33,19 +40,74 @@
       <?php $regTime = date("Y-m-d H:i:s") ?>
       <?= "게시일 : ".$contentInfo['regTime']."<br><br>"?>
       <?= "내용 : <br>"?>
-      
       <?= nl2br($contentInfo['content'])."<br>"?>
-
-      <!--htmlspecialchars 를 통해 치환된 스크립트 중에 사용가능한 태그들만 복구해서 사용
-          ex) h p br hr ...... -->
-      <!-- specialchars 대신 xss 공격 가능성이 있는 태그들만 str_replace 하는 방법. -->
-
       <?= "마지막 수정 : "?>
       <?= $contentInfo['lastUpdate']."<br>"?>
       <!--history에서 이전 페이지의 url을 불러와 이동-->
-      <?= "<button onclick='history.back()'>이전 페이지</button>"?>
-      <?= "<a href = '../board/write.php?boardID={$boardID}'>게시글 수정" ?>
-      <?= "<a href = '../board/delete.php?boardID={$boardID}'>게시글 삭제" ?>
+      <!-- <?= "<button onclick='history.back()'>이전 페이지</button>"?> -->
+      <?= "<a href = './list_designed.php'>게시글 목록</a>"?>
+      <?= "<a href = './write.php?boardID={$boardID}'>게시글 수정</a>"?>
+      <?= "<a href = './delete.php?boardID={$boardID}'>게시글 삭제</a>"?>
+
+    <?php
+    }else{
+      echo "잘못된 접근입니다.";
+      echo "<a href = '../board/list_designed.php'>게시판</a>";
+      exit;
+    }?>
+    <form name = "replyWrite" method = "post" action="./reply.php">
+      <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+
+      <br><br>
+      댓글
+      <br>
+      <textarea name="reply" cols = "40" rows = "5" required></textarea>
+      <br><br>
+      <input type = "submit" value = "댓글 저장"/>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th class = "no">번호</th>
+          <th class = "writer">작성자</th>
+          <th class = "reply">댓글</th>
+          <th class = "replyDate">작성 일시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+          $sql = "SELECT replyID, reply, replyDate ,replyPID, replyDepth, writer FROM reply ";
+          $sql .= "where boardID = '{$boardID}'";
+          $result = $dbConnect->query($sql);
+          $dataCount = $result -> num_rows;
+
+          if($dataCount>0){
+            for($i = 1; $i <= $dataCount; $i++){
+              $replyInfo = $result -> fetch_array(MYSQLI_ASSOC);
+
+              // if($replyInfo['replyPID'])
+              //
+              // for($j = 0; $j < $replyInfo['max']; $j++){
+              //   if($replyInfo['replyPID'] != 0){
+              //       //여기서 replyPID가 $i 인 애들
+              //   }
+              // }
+
+              echo "<tr>";
+              echo "<td>".$i."</td>";
+              echo "<td>".$replyInfo['writer']."</td>";
+              echo "<td>".$replyInfo['reply']."</td>";
+              echo "<td>".$replyInfo['replyDate']."</td>";
+              echo "</tr>";
+              
+            }
+
+          }else{
+            echo "<tr><td colspan = '4'> 게시글이 없습니다. </td></tr>";
+          }
+         ?>
+      </tbody>
+    </table>
 
     <?php
   }else{
@@ -53,10 +115,7 @@
     echo "<a href = '../board/list_designed.php'>게시판</a>";
     exit;
   }
-}else{
-  echo "잘못된 접근입니다.";
-  echo "<a href = '../board/list_designed.php'>게시판</a>";
-  exit;
-}
-
 ?>
+
+</body>
+</html>
