@@ -7,8 +7,9 @@
 
   $boardID = $_POST['boardID'];
   $reply = $_POST['reply'];
-
   $writer = $_SESSION['nickName'];
+  $replyPID = $_POST['replyPID'];
+  $replyDate = date("Y-m-d H:i:s");
 
   if($reply != null && $reply != ''){
     $reply = $dbConnect -> real_escape_string($reply);
@@ -16,20 +17,22 @@
     echo "<script type='text/javascript'>alert('댓글을 입력하세요.');</script>";
   }
 
-  $replyDate = date("Y-m-d H:i:s");
-  $reply = xss_clean($reply);
+  $reply = xss_clean($reply);//xss방어
 
+  $sql = "INSERT INTO reply (boardID, writer, reply, replyDate, replyPID) ";
+  $sql .= "VALUES ('{$boardID}', '{$writer}' ,'{$reply}', '{$replyDate}', '{$replyPID}') ";
+  $result = $dbConnect -> query($sql);//새로운 댓글 삽입
 
-  // if($replyDepth == 0){//즉 댓글이면
-  //   //replyPID 에 replyID 대입하는 sql문 작성
-  // }else{
-  //   //post로 받을 PID를 replyPID에 대입
-  // }
-
-  $sql = "INSERT INTO reply (boardID, writer, reply, replyDate) ";
-  $sql .= "VALUES ('{$boardID}', '{$writer}' ,'{$reply}', '{$replyDate}') ";
-
+  $sql = "SELECT * FROM reply where replyID = {$replyPID}";//부모 댓글의 정보 select
   $result = $dbConnect -> query($sql);
+  $result_p = $result -> fetch_array(MYSQLI_ASSOC);
+
+  if($replyPID != 0){
+      $sql_up = "UPDATE reply SET replyDepth = {$result_p['replyDepth']}+1, replyOrder = {$result_p['replyOrder']}+1 ";
+      $sql_up = "WHERE replyPID = {$replyPID}";//문제는 여기 부모 ID가 동일한 애들 구분..?
+
+  }
+
 
   if($result){
     echo "댓글 저장 완료";

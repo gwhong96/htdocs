@@ -9,6 +9,7 @@
 <!doctype html>
 <html>
 <head>
+
 </head>
 <body>
 
@@ -55,67 +56,77 @@
       echo "<a href = '../board/list_designed.php'>게시판</a>";
       exit;
     }?>
-    <form name = "replyWrite" method = "post" action="./reply.php">
-      <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+<!-- 댓글 입력 -->
+  <br><br><br>
+    <!-- 댓글 작성 버튼 여기 추가하고 -->
 
-      <br><br>
-      댓글
-      <br>
-      <textarea name="reply" cols = "40" rows = "5" required></textarea>
-      <br><br>
-      <input type = "submit" value = "댓글 저장"/>
-    </form>
-    <table>
-      <thead>
-        <tr>
-          <th class = "no">번호</th>
-          <th class = "writer">작성자</th>
-          <th class = "reply">댓글</th>
-          <th class = "replyDate">작성 일시</th>
-        </tr>
-      </thead>
-      <tbody>
+    <br>
+
         <?php
-          $sql = "SELECT replyID, reply, replyDate ,replyPID, replyDepth, writer FROM reply ";
-          $sql .= "where boardID = '{$boardID}'";
+        //댓글 조회
+          $sql = "SELECT * FROM reply ";
+          $sql .= "where boardID = '{$boardID}' ";
+          $sql .= "order by replyOrder";
           $result = $dbConnect->query($sql);
           $dataCount = $result -> num_rows;
+
 
           if($dataCount>0){
             for($i = 1; $i <= $dataCount; $i++){
               $replyInfo = $result -> fetch_array(MYSQLI_ASSOC);
+              $depth = $replyInfo['replyDepth'];
 
-              // if($replyInfo['replyPID'])
-              //
-              // for($j = 0; $j < $replyInfo['max']; $j++){
-              //   if($replyInfo['replyPID'] != 0){
-              //       //여기서 replyPID가 $i 인 애들
-              //   }
-              // }
+              echo "<div>";
+              if($depth == 0){
+                echo "--";
+              }else{
+                for ($j = 0; $j < $depth; $j++){
+                  echo "&nbsp&nbsp&nbsp&nbsp";
+                }
+                echo "ㄴ";
+              }
+              echo $replyInfo['writer'];
+              echo $replyInfo['reply'];
+              echo $replyInfo['replyDate'];
+            ?>
+            <button p_id='replyWrite' onclick="show_box();">댓글</button>
 
-              echo "<tr>";
-              echo "<td>".$i."</td>";
-              echo "<td>".$replyInfo['writer']."</td>";
-              echo "<td>".$replyInfo['reply']."</td>";
-              echo "<td>".$replyInfo['replyDate']."</td>";
-              echo "</tr>";
-              
-            }
+            <?php
+              echo "</div><br>";
+              ?>
+              <form id = "replyWrite" name = "replyWrite" method = "post" action="./reply.php" style="display:none">
+                <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+                <input type="hidden" value ='<?=$replyInfo['replyPID']?>' name = "replyPID">
+                <textarea name="reply" cols = "40" rows = "5" required></textarea>
+                <br>
+                <!--댓글일 경우 0을 전송, 이외에는 부모의 ID를 전송하게 하는 버튼 필요 -->
+                <input type = "submit" value = "댓글 저장"/>
+                <br>
+              </form>
+              <?php
+
+            }//for문 끝나는 지점
 
           }else{
-            echo "<tr><td colspan = '4'> 게시글이 없습니다. </td></tr>";
+            echo "댓글이 없습니다.";
           }
-         ?>
-      </tbody>
-    </table>
 
-    <?php
-  }else{
-    echo "잘못된 접근입니다.";
-    echo "<a href = '../board/list_designed.php'>게시판</a>";
-    exit;
-  }
-?>
-
+        }else{
+          echo "잘못된 접근입니다.";
+          echo "<a href = '../board/list_designed.php'>게시판</a>";
+          exit;
+        }
+        ?>
+        <!--jquery 사용하기 위한 호출-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+          function show_box(ele){
+            // console.log($(ele).attr('p_id'));
+            $("#replyWrite").css("display","block");
+          }
+          function hide_box(){
+            $("#replyWrite").css("display","none");
+          }
+        </script>
 </body>
 </html>
