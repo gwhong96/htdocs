@@ -95,7 +95,8 @@
               echo $replyInfo['reply']."&nbsp&nbsp&nbsp";
               echo $replyInfo['replyDate']."&nbsp";
             ?>
-            <button reply_id="<?=$replyInfo['replyID']?>">답글</button>
+            <button class = 'button1' reply_id="<?=$replyInfo['replyID']?>">답글</button>
+            <button class = 'button2' modify_id="<?=$replyInfo['replyID']?>">수정</button>
 
             <?php
               echo "</div><br>";
@@ -108,6 +109,15 @@
                 <textarea name="reply" cols = "40" rows = "5" required></textarea>
                 <br>
                 <input type = "submit" value = "답글 저장"/>
+                <br>
+              </form>
+
+              <form id = "replyModify<?=$replyInfo['replyID']?>" method = "post" action="./reply_modify.php" style="display:none">
+                <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+                <input type="hidden" value ='<?=$replyInfo['replyID']?>' name = "replyID">
+                <textarea name="reply" cols = "40" rows = "5" required><?=$replyInfo['reply']?></textarea>
+                <br>
+                <input type = "submit" value = "답글 수정"/>
                 <br>
               </form>
               <?php
@@ -124,10 +134,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
           $(document).ready(function(){
-            $("button").click(function(){
+            $(".button1").click(function(){
               var reply_id = $(this).attr('reply_id');
               $("#replyWrite"+reply_id).toggle();
             });
+            $(".button2").click(function(){
+              var modify_id = $(this).attr('modify_id');
+              $("#replyModify"+modify_id).toggle();
+            });
+
             });
         </script>
 </body>

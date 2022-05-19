@@ -43,7 +43,14 @@
 // str_replace('<script>/dfsff/</script>', '')
   if($_POST['boardID'] != ''){//게시글 수정시
     $boardID = $_POST['boardID'];
-    $sql = "UPDATE board SET title = '{$title}', content = '{$content}', boardPW = '{$boardPW}', disYN = '{$disYN}', lastUpdate = '{$regTime}' ";
+    $sql = "UPDATE board SET title = '{$title}', content = '{$content}', boardPW = '{$boardPW}', disYN = '{$disYN}', lastUpdate = '{$regTime}'";
+
+//     $sql =<<<SQL
+//       UPDATE board
+//        SET  content = ?
+//          , disPW   = ?
+// SQL;
+
     //업데이트 쿼리 날리는 시간 = 수정시간
     $sql .= "WHERE boardID = ".$boardID;
   }else{//게시글 신규 작성시
