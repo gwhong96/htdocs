@@ -9,7 +9,6 @@
 <!doctype html>
 <html>
 <head>
-
 </head>
 <body>
 
@@ -58,9 +57,6 @@
     }?>
 <!-- 댓글 입력 -->
   <br><br><br>
-    <!-- 댓글 작성 버튼 여기 추가하고 -->
-
-    <br>
 
         <?php
         //댓글 조회
@@ -69,64 +65,70 @@
           $sql .= "order by replyOrder";
           $result = $dbConnect->query($sql);
           $dataCount = $result -> num_rows;
+          ?>
 
-
+          <form method = "post" action="./reply_ok.php" name = "reply0">
+            <input type="hidden" value ='0' name = "order">
+            <input type="hidden" value ='0' name = "depth">
+            <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+            <input type="hidden" value ='0' name = "replyPID">
+            <textarea name="reply" cols = "40" rows = "5" required></textarea>
+            <input type = "submit" value = "댓글 저장"/>
+          </form>
+          <br><br>
+      <?php
           if($dataCount>0){
             for($i = 1; $i <= $dataCount; $i++){
               $replyInfo = $result -> fetch_array(MYSQLI_ASSOC);
               $depth = $replyInfo['replyDepth'];
 
               echo "<div>";
-              if($depth == 0){
+              if($depth == 0){//댓글
                 echo "--";
-              }else{
+              }else{//대댓글 이하
                 for ($j = 0; $j < $depth; $j++){
                   echo "&nbsp&nbsp&nbsp&nbsp";
                 }
                 echo "ㄴ";
               }
-              echo $replyInfo['writer'];
-              echo $replyInfo['reply'];
-              echo $replyInfo['replyDate'];
+              echo $replyInfo['writer']."&nbsp:&nbsp";
+              echo $replyInfo['reply']."&nbsp&nbsp&nbsp";
+              echo $replyInfo['replyDate']."&nbsp";
             ?>
-            <button p_id='replyWrite' onclick="show_box();">댓글</button>
+            <button reply_id="<?=$replyInfo['replyID']?>">답글</button>
 
             <?php
               echo "</div><br>";
               ?>
-              <form id = "replyWrite" name = "replyWrite" method = "post" action="./reply.php" style="display:none">
+              <form id = "replyWrite<?=$replyInfo['replyID']?>" method = "post" action="./reply_ok.php" style="display:none">
+                <input type="hidden" value ='<?=$replyInfo['replyOrder']?>' name = "order">
+                <input type="hidden" value ='<?=$depth?>' name = "depth">
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
-                <input type="hidden" value ='<?=$replyInfo['replyPID']?>' name = "replyPID">
+                <input type="hidden" value ='<?=$replyInfo['replyID']?>' name = "replyPID">
                 <textarea name="reply" cols = "40" rows = "5" required></textarea>
                 <br>
-                <!--댓글일 경우 0을 전송, 이외에는 부모의 ID를 전송하게 하는 버튼 필요 -->
-                <input type = "submit" value = "댓글 저장"/>
+                <input type = "submit" value = "답글 저장"/>
                 <br>
               </form>
               <?php
-
             }//for문 끝나는 지점
-
           }else{
             echo "댓글이 없습니다.";
           }
-
         }else{
           echo "잘못된 접근입니다.";
           echo "<a href = '../board/list_designed.php'>게시판</a>";
           exit;
-        }
-        ?>
-        <!--jquery 사용하기 위한 호출-->
+        }?>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-          function show_box(ele){
-            // console.log($(ele).attr('p_id'));
-            $("#replyWrite").css("display","block");
-          }
-          function hide_box(){
-            $("#replyWrite").css("display","none");
-          }
+          $(document).ready(function(){
+            $("button").click(function(){
+              var reply_id = $(this).attr('reply_id');
+              $("#replyWrite"+reply_id).toggle();
+            });
+            });
         </script>
 </body>
 </html>

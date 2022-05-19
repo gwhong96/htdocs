@@ -10,6 +10,8 @@
   $writer = $_SESSION['nickName'];
   $replyPID = $_POST['replyPID'];
   $replyDate = date("Y-m-d H:i:s");
+  $depth = $_POST['depth'];
+  $order = $_POST['order'];
 
   if($reply != null && $reply != ''){
     $reply = $dbConnect -> real_escape_string($reply);
@@ -22,19 +24,23 @@
   $sql = "INSERT INTO reply (boardID, writer, reply, replyDate, replyPID) ";
   $sql .= "VALUES ('{$boardID}', '{$writer}' ,'{$reply}', '{$replyDate}', '{$replyPID}') ";
   $result = $dbConnect -> query($sql);//새로운 댓글 삽입
+  // $result = mysql_query($sql);
 
-  $sql = "SELECT * FROM reply where replyID = {$replyPID}";//부모 댓글의 정보 select
-  $result = $dbConnect -> query($sql);
-  $result_p = $result -> fetch_array(MYSQLI_ASSOC);
+  // $insertID = $dbConnect -> lastInsertId();
+  $insertID = mysqli_insert_id($dbConnect);
 
-  if($replyPID != 0){
-      $sql_up = "UPDATE reply SET replyDepth = {$result_p['replyDepth']}+1, replyOrder = {$result_p['replyOrder']}+1 ";
-      $sql_up = "WHERE replyPID = {$replyPID}";//문제는 여기 부모 ID가 동일한 애들 구분..?
+   $sql_up = "UPDATE reply SET replyOrder = replyOrder + 1 WHERE replyOrder > {$order}";
+   $result_up = $dbConnect -> query($sql_up);//기존 order값 변경
 
+  if($replyPID != 0){//댓글이 아닐 경우
+      $sql_up2 = "UPDATE reply SET replyDepth = {$depth}+1, replyOrder = {$order}+1 ";
+  }else{//댓글일 경우
+    $sql_up2 = "UPDATE reply SET replyOrder = {$order}+1 ";
   }
+    $sql_up2 .= "WHERE replyID = {$insertID}";
+    $result_up2 = $dbConnect -> query($sql_up2);//새로운 댓글의 order값 업데이트
 
-
-  if($result){
+  if($result_up2){
     echo "댓글 저장 완료";
     echo "<a href = './view.php?boardID={$boardID}'> 게시글로 돌아가기</a>";
     exit;
