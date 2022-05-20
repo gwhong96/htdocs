@@ -1,10 +1,10 @@
 <!-- DB연결 -->
 <?php
-  $host = "localhost";
-  $user = "root";
-  $pw = "1234";
-  $dbName = "phpboard";
-  $dbConnect = new mysqli($host, $user, $pw, $dbName);
+  $host       = "localhost";
+  $user       = "root";
+  $pw         = "1234";
+  $dbName     = "phpboard";
+  $dbConnect  = new mysqli($host, $user, $pw, $dbName);
   $dbConnect->set_charset("utf8");
 
   if(mysqli_connect_errno()){

@@ -10,6 +10,7 @@
   $replyPID   = $_POST['replyPID'];
   $depth      = $_POST['depth'];
   $order      = $_POST['order'];
+  
   $replyDate  = date("Y-m-d H:i:s");
   $writer     = $_SESSION['nickName'];
 

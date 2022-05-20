@@ -60,11 +60,11 @@
 
         <?php
         //댓글 조회
-          $sql = "SELECT * FROM reply ";
-          $sql .= "where boardID = '{$boardID}' ";
-          $sql .= "order by replyOrder";
-          $result = $dbConnect->query($sql);
-          $dataCount = $result -> num_rows;
+          $sql         = "SELECT * FROM reply ";
+          $sql        .= "where boardID = '{$boardID}' ";
+          $sql        .= "order by replyOrder";
+          $result      = $dbConnect->query($sql);
+          $dataCount   = $result -> num_rows;
           ?>
 
           <form method = "post" action="./reply_ok.php" name = "reply0">
