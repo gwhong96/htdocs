@@ -4,7 +4,6 @@ function logCheck($type){
 
   $hTime = date("Y-m-d H:i:s");
 
-
   $sql  = "INSERT INTO boardhistory (type, boardID, delYN, title, boardPW, content, disYN, historyTime) ";
   $sql .= "VALUES (?,?,?,?,?,?,?,?)";
 
@@ -19,4 +18,4 @@ function logCheck($type){
 
 
 
- insert into log_table (a,b,c,yn, type) select a,b,c,'y','del' table where table_id = 1
+ <!-- insert into log_table (a,b,c,yn, type) select a,b,c,'y','del' table where table_id = 1 -->

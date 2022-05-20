@@ -79,8 +79,9 @@
       <?php
           if($dataCount>0){
             for($i = 1; $i <= $dataCount; $i++){
-              $replyInfo = $result -> fetch_array(MYSQLI_ASSOC);
-              $depth = $replyInfo['replyDepth'];
+              $replyInfo  = $result -> fetch_array(MYSQLI_ASSOC);
+              $depth      = $replyInfo['replyDepth'];
+              $replyID    = $replyInfo['replyID'];
 
               echo "<div>";
               if($depth == 0){//댓글
@@ -91,30 +92,41 @@
                 }
                 echo "ㄴ";
               }
-              echo $replyInfo['writer']."&nbsp:&nbsp";
-              echo $replyInfo['reply']."&nbsp&nbsp&nbsp";
-              echo $replyInfo['replyDate']."&nbsp";
+
+              if($replyInfo['delYN'] == 'N'){
+                echo $replyInfo['writer']."&nbsp:&nbsp";
+                echo $replyInfo['reply']."&nbsp&nbsp&nbsp";
+                echo $replyInfo['replyDate']."&nbsp";
+              }else{
+                echo "삭제된 댓글 입니다.";
+              }
+
             ?>
-            <button class = 'button1' reply_id="<?=$replyInfo['replyID']?>">답글</button>
-            <button class = 'button2' modify_id="<?=$replyInfo['replyID']?>">수정</button>
+            <button class = 'button1' reply_id="<?=$replyID?>">답글</button>
+            <?php
+            if($replyInfo['writer'] == $_SESSION['nickName'] && $replyInfo['delYN'] == 'N'){?>
+              <button class = 'button2' modify_id="<?=$replyID?>">수정</button>
+              <?= "<a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a>"?>
+            <?php }?>
+
 
             <?php
               echo "</div><br>";
               ?>
-              <form id = "replyWrite<?=$replyInfo['replyID']?>" method = "post" action="./reply_ok.php" style="display:none">
+              <form id = "replyWrite<?=$replyID?>" method = "post" action="./reply_ok.php" style="display:none">
                 <input type="hidden" value ='<?=$replyInfo['replyOrder']?>' name = "order">
                 <input type="hidden" value ='<?=$depth?>' name = "depth">
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
-                <input type="hidden" value ='<?=$replyInfo['replyID']?>' name = "replyPID">
+                <input type="hidden" value ='<?=$replyID?>' name = "replyPID">
                 <textarea name="reply" cols = "40" rows = "5" required></textarea>
                 <br>
                 <input type = "submit" value = "답글 저장"/>
                 <br>
               </form>
 
-              <form id = "replyModify<?=$replyInfo['replyID']?>" method = "post" action="./reply_modify.php" style="display:none">
+              <form id = "replyModify<?=$replyID?>" method = "post" action="./reply_modify.php" style="display:none">
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
-                <input type="hidden" value ='<?=$replyInfo['replyID']?>' name = "replyID">
+                <input type="hidden" value ='<?=$replyID?>' name = "replyID">
                 <textarea name="reply" cols = "40" rows = "5" required><?=$replyInfo['reply']?></textarea>
                 <br>
                 <input type = "submit" value = "답글 수정"/>
@@ -134,16 +146,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
           $(document).ready(function(){
-            $(".button1").click(function(){
+            $(".button1").click(function(){//답글 작성
               var reply_id = $(this).attr('reply_id');
               $("#replyWrite"+reply_id).toggle();
             });
-            $(".button2").click(function(){
+            $(".button2").click(function(){//댓글 수정
               var modify_id = $(this).attr('modify_id');
               $("#replyModify"+modify_id).toggle();
             });
-
-            });
+          });
         </script>
 </body>
 </html>
