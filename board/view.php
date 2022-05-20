@@ -55,67 +55,106 @@
       echo "<a href = '../board/list_designed.php'>게시판</a>";
       exit;
     }?>
-    <form name = "replyWrite" method = "post" action="./reply.php">
-      <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+<!-- 댓글 입력 -->
+  <br><br><br>
 
-      <br><br>
-      댓글
-      <br>
-      <textarea name="reply" cols = "40" rows = "5" required></textarea>
-      <br><br>
-      <input type = "submit" value = "댓글 저장"/>
-    </form>
-    <table>
-      <thead>
-        <tr>
-          <th class = "no">번호</th>
-          <th class = "writer">작성자</th>
-          <th class = "reply">댓글</th>
-          <th class = "replyDate">작성 일시</th>
-        </tr>
-      </thead>
-      <tbody>
         <?php
-          $sql = "SELECT replyID, reply, replyDate ,replyPID, replyDepth, writer FROM reply ";
-          $sql .= "where boardID = '{$boardID}'";
-          $result = $dbConnect->query($sql);
-          $dataCount = $result -> num_rows;
+        //댓글 조회
+          $sql         = "SELECT * FROM reply ";
+          $sql        .= "where boardID = '{$boardID}' ";
+          $sql        .= "order by replyOrder";
+          $result      = $dbConnect->query($sql);
+          $dataCount   = $result -> num_rows;
+          ?>
 
+          <form method = "post" action="./reply_ok.php" name = "reply0">
+            <input type="hidden" value ='0' name = "order">
+            <input type="hidden" value ='0' name = "depth">
+            <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+            <input type="hidden" value ='0' name = "replyPID">
+            <textarea name="reply" cols = "40" rows = "5" required></textarea>
+            <input type = "submit" value = "댓글 저장"/>
+          </form>
+          <br><br>
+      <?php
           if($dataCount>0){
             for($i = 1; $i <= $dataCount; $i++){
-              $replyInfo = $result -> fetch_array(MYSQLI_ASSOC);
+              $replyInfo  = $result -> fetch_array(MYSQLI_ASSOC);
+              $depth      = $replyInfo['replyDepth'];
+              $replyID    = $replyInfo['replyID'];
 
-              // if($replyInfo['replyPID'])
-              //
-              // for($j = 0; $j < $replyInfo['max']; $j++){
-              //   if($replyInfo['replyPID'] != 0){
-              //       //여기서 replyPID가 $i 인 애들
-              //   }
-              // }
+              echo "<div>";
+              if($depth == 0){//댓글
+                echo "--";
+              }else{//대댓글 이하
+                for ($j = 0; $j < $depth; $j++){
+                  echo "&nbsp&nbsp&nbsp&nbsp";
+                }
+                echo "ㄴ";
+              }
 
-              echo "<tr>";
-              echo "<td>".$i."</td>";
-              echo "<td>".$replyInfo['writer']."</td>";
-              echo "<td>".$replyInfo['reply']."</td>";
-              echo "<td>".$replyInfo['replyDate']."</td>";
-              echo "</tr>";
-              
-            }
+              if($replyInfo['delYN'] == 'N'){
+                echo $replyInfo['writer']."&nbsp:&nbsp";
+                echo $replyInfo['reply']."&nbsp&nbsp&nbsp";
+                echo $replyInfo['replyDate']."&nbsp";
+              }else{
+                echo "삭제된 댓글 입니다.";
+              }
 
+            ?>
+            <button class = 'button1' reply_id="<?=$replyID?>">답글</button>
+            <?php
+            if($replyInfo['writer'] == $_SESSION['nickName'] && $replyInfo['delYN'] == 'N'){?>
+              <button class = 'button2' modify_id="<?=$replyID?>">수정</button>
+              <?= "<a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a>"?>
+            <?php }?>
+
+
+            <?php
+              echo "</div><br>";
+              ?>
+              <form id = "replyWrite<?=$replyID?>" method = "post" action="./reply_ok.php" style="display:none">
+                <input type="hidden" value ='<?=$replyInfo['replyOrder']?>' name = "order">
+                <input type="hidden" value ='<?=$depth?>' name = "depth">
+                <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+                <input type="hidden" value ='<?=$replyID?>' name = "replyPID">
+                <textarea name="reply" cols = "40" rows = "5" required></textarea>
+                <br>
+                <input type = "submit" value = "답글 저장"/>
+                <br>
+              </form>
+
+              <form id = "replyModify<?=$replyID?>" method = "post" action="./reply_modify.php" style="display:none">
+                <input type="hidden" value ='<?=$boardID?>' name = "boardID">
+                <input type="hidden" value ='<?=$replyID?>' name = "replyID">
+                <textarea name="reply" cols = "40" rows = "5" required><?=$replyInfo['reply']?></textarea>
+                <br>
+                <input type = "submit" value = "답글 수정"/>
+                <br>
+              </form>
+              <?php
+            }//for문 끝나는 지점
           }else{
-            echo "<tr><td colspan = '4'> 게시글이 없습니다. </td></tr>";
+            echo "댓글이 없습니다.";
           }
-         ?>
-      </tbody>
-    </table>
+        }else{
+          echo "잘못된 접근입니다.";
+          echo "<a href = '../board/list_designed.php'>게시판</a>";
+          exit;
+        }?>
 
-    <?php
-  }else{
-    echo "잘못된 접근입니다.";
-    echo "<a href = '../board/list_designed.php'>게시판</a>";
-    exit;
-  }
-?>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+          $(document).ready(function(){
+            $(".button1").click(function(){//답글 작성
+              var reply_id = $(this).attr('reply_id');
+              $("#replyWrite"+reply_id).toggle();
+            });
+            $(".button2").click(function(){//댓글 수정
+              var modify_id = $(this).attr('modify_id');
+              $("#replyModify"+modify_id).toggle();
+            });
+          });
+        </script>
 </body>
 </html>

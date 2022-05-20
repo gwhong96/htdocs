@@ -5,11 +5,10 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/func/xssCheck.php';
 
-  $title = $_POST['title'];
-  $content = $_POST['content'];
-  // $name = $_POST['name'];
-  $boardPW = $_POST['boardPW'];
-  $boardPW = hash('sha256', 'nasmedia'.$boardPW);//게시글 비밀번호 해시암호화
+  $title    = $_POST['title'];
+  $content  = $_POST['content'];
+  $boardPW  = $_POST['boardPW'];
+  $boardPW  = hash('sha256', 'nasmedia'.$boardPW);//게시글 비밀번호 해시암호화
 
 
   if(isset($_POST['disYN'])){//비공개를 체크해서 N을 post받으면
@@ -43,7 +42,14 @@
 // str_replace('<script>/dfsff/</script>', '')
   if($_POST['boardID'] != ''){//게시글 수정시
     $boardID = $_POST['boardID'];
-    $sql = "UPDATE board SET title = '{$title}', content = '{$content}', boardPW = '{$boardPW}', disYN = '{$disYN}', lastUpdate = '{$regTime}' ";
+    $sql = "UPDATE board SET title = '{$title}', content = '{$content}', boardPW = '{$boardPW}', disYN = '{$disYN}', lastUpdate = '{$regTime}'";
+
+//     $sql =<<<SQL
+//       UPDATE board
+//        SET  content = ?
+//          , disPW   = ?
+//      SQL;
+
     //업데이트 쿼리 날리는 시간 = 수정시간
     $sql .= "WHERE boardID = ".$boardID;
   }else{//게시글 신규 작성시
