@@ -46,8 +46,13 @@
       <!--history에서 이전 페이지의 url을 불러와 이동-->
       <!-- <?= "<button onclick='history.back()'>이전 페이지</button>"?> -->
       <?= "<a href = './list_designed.php'>게시글 목록</a>"?>
-      <?= "<a href = './write.php?boardID={$boardID}'>게시글 수정</a>"?>
-      <?= "<a href = './delete.php?boardID={$boardID}'>게시글 삭제</a>"?>
+
+      <?php
+      if($contentInfo['nickName'] == $_SESSION['nickName']){
+        echo "<a href = './write.php?boardID={$boardID}'>게시글 수정</a>";
+        echo "<a href = './delete.php?boardID={$boardID}'>게시글 삭제</a>";
+      }
+      ?>
 
     <?php
     }else{
