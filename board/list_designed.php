@@ -3,6 +3,7 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
+  include $_SERVER['DOCUMENT_ROOT'].'./board/func/trig.php';
 ?>
 
 <!DOCTYPE html>
@@ -137,7 +138,7 @@ table.type11 td:hover {  background: #555;}
                   $memberInfo = $result->fetch_array(MYSQLI_ASSOC);
                   // $title = htmlspecialchars($memberInfo['title']);
                   echo "<tr>";
-                  echo "<td>".($totalCount['count(boardID)']-$i-(($page-1)*$dataCount))."</td>";//총 게시글 수 boardID와 무관하게 역순정렬
+                  echo "<td>".($totalCount['count(boardID)']-$i-(($page-1)*10))."</td>";//총 게시글 수 boardID와 무관하게 역순정렬
 
                   if($memberInfo['disYN'] == 'N'){//비공개 일 시
                       echo "<td><a href = '../board/checkDisYN.php?boardID={$memberInfo['boardID']}'>";//게시글 비밀번호 확인 페이지

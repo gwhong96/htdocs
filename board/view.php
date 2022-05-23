@@ -3,7 +3,7 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
-  include $_SERVER['DOCUMENT_ROOT'].'./board/xss.php';
+  include $_SERVER['DOCUMENT_ROOT'].'./board/func/xssCheck.php';
   ?>
 
 <!doctype html>
