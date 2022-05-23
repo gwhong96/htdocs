@@ -1,8 +1,6 @@
-<!--히스토리 테이블 호출 함수 -->
-
 <?php
-function log_history($boardID){
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
+  $boardID = $_GET['boardID'];
 
   $sql       = "SELECT * FROM history_board WHERE boardID = {$boardID}";
   $result    = $dbConnect -> query($sql);
@@ -31,7 +29,7 @@ function log_history($boardID){
       $pre_views = $historyInfo['views'];
 
     }
-  }
-
 }
+
+
  ?>
