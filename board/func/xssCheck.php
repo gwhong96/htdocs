@@ -1,4 +1,4 @@
-<!--xss 방어용 함수 선언 -->
+<!--xss 방어용 함수 -->
 
 <?php
 function xss_clean($data){ // html_decode 함수의 일종

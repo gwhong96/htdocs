@@ -1,3 +1,4 @@
+<!-- 비밀번호 정규식 검증 -->
 <?php
 function passwordCheck($_str)
 {

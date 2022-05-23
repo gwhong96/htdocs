@@ -1,6 +1,6 @@
 <?php
 
-function logCheck($type){
+function logCheck($type){//$type으로 del, up, ins 셋중 하나 받아오기
 
   $hTime = date("Y-m-d H:i:s");
 
@@ -9,13 +9,15 @@ function logCheck($type){
 
   $query = $dbConnect -> prepare($sql);
   $query -> bind_param('sissssss',$type, $boardID, $delYN, $title, $boardPW, $content, $disYN, $hTime);
+  //delYN
   $result = $query -> execute();
 
 }
+
+
 
  ?>
 
 
 
-
- <!-- insert into log_table (a,b,c,yn, type) select a,b,c,'y','del' table where table_id = 1 -->
+ insert into boardhistory (a,b,c,yn, type) select a,b,c,'y','del' from board where boardId = 1

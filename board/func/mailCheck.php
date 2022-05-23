@@ -1,3 +1,4 @@
+<!-- 이메일 정규식 검증 -->
 <?php
 
 function mailCheck($_str)
