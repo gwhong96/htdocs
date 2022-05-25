@@ -23,12 +23,17 @@
     if($referer == ''){exit("잘못된 접근입니다.");}//url을 따라 접근하게 되면 이전 페이지 url이 '' 임으로 걸러낼 수 있다.
 
     $boardID = $_GET['boardID'];
-    $sql = "SELECT b.title, b.content, m.nickName, b.regTime, b.lastUpdate, b.disYN FROM board b ";
+    $sql = "SELECT b.title, b.content, m.nickName, b.regTime, b.lastUpdate, b.disYN, b.attach FROM board b ";
     $sql .= "JOIN member m on (m.memberID = b.memberID) ";
     $sql .= "WHERE b.boardID = {$boardID} AND b.delYN = 'N'";
 
     $result = $dbConnect -> query($sql);
     $dataCount = $result->num_rows;
+
+    $sql_upload = "SELECT * FROM upload_file WHERE boardID = '{$boardID}'";
+    $result_upload = $dbConnect -> query($sql_upload);
+    $dataCount2 = $result_upload->num_rows;
+
     if($dataCount > 0 ){
       $contentInfo = $result -> fetch_array(MYSQLI_ASSOC);
       $v_sql = "UPDATE board set views = views + 1 where boardID = {$boardID}";//조회수 증가용 쿼리
@@ -42,7 +47,17 @@
       <?= "내용 : <br>"?>
       <?= nl2br($contentInfo['content'])."<br>"?>
       <?= "마지막 수정 : "?>
-      <?= $contentInfo['lastUpdate']."<br>"?>
+      <?= $contentInfo['lastUpdate']."<br><br>"?>
+      <?= "첨부파일 : "?>
+      <?php
+      if($dataCount2 > 0){//첨부파일이 존재한다면
+        for($i = 0; $i < $dataCount2; $i++){//첨부파일 갯수만큼 반복
+          $uploadInfo = $result_upload -> fetch_array(MYSQLI_ASSOC);
+          echo "<a href='../upload/{$uploadInfo['fileName']}' download> '{$uploadInfo['originalName']}'";
+        }
+      }
+      ?>
+      </a><br><br>
       <!--history에서 이전 페이지의 url을 불러와 이동-->
       <!-- <?= "<button onclick='history.back()'>이전 페이지</button>"?> -->
       <?= "<a href = './list_designed.php'>게시글 목록</a>"?>
@@ -64,7 +79,6 @@
   <br><br><br>
 
         <?php
-        //댓글 조회
           $sql         = "SELECT * FROM reply ";
           $sql        .= "where boardID = '{$boardID}' ";
           $sql        .= "order by replyOrder";

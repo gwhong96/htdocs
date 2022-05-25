@@ -3,7 +3,6 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
-
  ?>
 
  <!doctype html>
@@ -38,7 +37,7 @@
   }
     // print_r( $boardInfo);
    ?>
-   <form name = "boardWrite" method = "post" action = "./write_ok.php">
+   <form name = "boardWrite" method = "post" action = "./write_ok.php" enctype="multipart/form-data">
      <input type="hidden" value='<?=$boardID?>' name = "boardID">
      제목
      <br>
@@ -47,6 +46,10 @@
      내용
      <br>
      <textarea name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+     <br>
+     파일 첨부
+     <input type="file" name="upfile[]" multiple='multiple'>
+     <!-- 다중 첨부파일 추가 -->
      <br><br>
      비공개
      <?php
@@ -66,7 +69,5 @@
      <input type = "submit" value = "저장"/>
      <!--작성 완료-->
    </form>
-
-
 </body>
 </html>
