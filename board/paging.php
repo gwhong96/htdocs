@@ -17,7 +17,7 @@
         break;
     }}
     $sql .=" AND delYN = 'N'";
-    
+
   $result = $dbConnect -> query($sql);
 
   $boardTotalCount = $result ->fetch_array(MYSQLI_ASSOC);//컬럼명으로 호출
@@ -31,11 +31,11 @@
       $link =  '';
     }
 
-  echo "<a href = './list_designed.php?page=1{$link}'>first</a>&nbsp;&nbsp;";
+  echo "<a href = './list.php?page=1{$link}'>first</a>";
 
   if($page != 1){
     $previousPage = $page - 1;
-    echo "<a href='./list_designed.php?page={$previousPage}{$link}'>prev</a>";
+    echo "<a href='./list.php?page={$previousPage}{$link}'>prev</a>";
   }//이전 페이지 이동 링크
 
   $pageTerm = 5;//앞뒤 페이지 표시 갯수
@@ -54,13 +54,13 @@
   }//마지막 페이지 표시가 실제 페이지 최대 갯수보다 많을경우
 
   for($i = $startPage; $i <= $lastPage; $i++){
-    echo "&nbsp <a href = './list_designed.php?page={$i}{$link}'>{$i}</a>";
+    echo "<a href = './list.php?page={$i}{$link}'>{$i}</a>";
 
   }
   if($page != $totalPage){//다음 페이지가 있다면
     $nextPage = $page + 1;
-    echo "&nbsp; <a href = './list_designed.php?page={$nextPage}{$link}'>next</a>";//다음페이지 버튼 활성화
+    echo "<a href = './list.php?page={$nextPage}{$link}'>NEXT</a>";//다음페이지 버튼 활성화
   }
-  echo "&nbsp;&nbsp;&nbsp;<a href = './list_designed.php?page={$totalPage}{$link}'>last</a>";
+  echo "<a href = './list.php?page={$totalPage}{$link}'>LAST</a>";
 
  ?>

@@ -14,12 +14,12 @@
 
   if($result){
     echo "삭제 완료";
-    echo "<a href = './list_designed.php'> 게시글 목록으로 이동</a>";
+    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
     exit;
   }
   else{
     echo "삭제 실패";
-    echo "<a href = './list_designed.php'> 게시글 목록으로 이동</a>";
+    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
     exit;
   }
 

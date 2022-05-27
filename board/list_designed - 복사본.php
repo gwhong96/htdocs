@@ -20,12 +20,12 @@
   <script src="./assets/js/init-alpine.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-  <style>
+  <!-- <style>
 table.type11 { border-collapse: separate; border-spacing: 1px; text-align: center; line-height: 1.5; margin: 20px 10px;}
 table.type11 th { width: 155px; padding: 10px; font-weight: bold; vertical-align: top; color: #fff; background: #ce481f ;}
 table.type11 td { width: 155px; padding: 10px; vertical-align: top; border-bottom: 1px solid #ccc; background: #eee;}
 table.type11 td:hover {  background: #555;}
-</style>
+</style> -->
 </head>
 
 <body>
@@ -35,7 +35,7 @@ table.type11 td:hover {  background: #555;}
   <a href = "./list_designed.php">초기화</a>
 	<article class="boardArticle">
 
-		<h3>QnA</h3>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Q&A</h4>
 
 		<table class="type11" border="1" style="" id=asdasdasd>
 

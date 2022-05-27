@@ -9,8 +9,16 @@
 <!doctype html>
 <html>
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/tailwind.output.css" />
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <script src="./js/init-alpine.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </head>
 <body>
+  <h3><a href="./list.php"><img src="../img/logo.svg"></a></h3>
+  <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">VIEW</h4>
 
 <?php
   if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){//이전 페이지의 url정보
@@ -30,13 +38,13 @@
     $result = $dbConnect -> query($sql);
     $dataCount = $result->num_rows;
 
-    $sql_upload = "SELECT * FROM upload_file WHERE boardID = '{$boardID}'";
+    $sql_upload = "SELECT * FROM upload_file WHERE boardID = '{$boardID}' AND originalName <> ''";
     $result_upload = $dbConnect -> query($sql_upload);
     $dataCount2 = $result_upload->num_rows;
 
     if($dataCount > 0 ){
       $contentInfo = $result -> fetch_array(MYSQLI_ASSOC);
-      $v_sql = "UPDATE board set views = views + 1 where boardID = {$boardID}";//조회수 증가용 쿼리
+      $v_sql = "UPDATE board set views = views + 1 where boardID = {$boardID} ";//조회수 증가용 쿼리
       $v_result = $dbConnect -> query($v_sql);
       ?>
 
@@ -60,7 +68,7 @@
       </a><br><br>
       <!--history에서 이전 페이지의 url을 불러와 이동-->
       <!-- <?= "<button onclick='history.back()'>이전 페이지</button>"?> -->
-      <?= "<a href = './list_designed.php'>게시글 목록</a>"?>
+      <?= "<a href = './list.php'>게시글 목록</a>"?>
 
       <?php
       if($contentInfo['nickName'] == $_SESSION['nickName']){
@@ -72,7 +80,7 @@
     <?php
     }else{
       echo "잘못된 접근입니다.";
-      echo "<a href = '../board/list_designed.php'>게시판</a>";
+      echo "<a href = '../board/list.php'>게시판</a>";
       exit;
     }?>
 <!-- 댓글 입력 -->
@@ -158,7 +166,7 @@
           }
         }else{
           echo "잘못된 접근입니다.";
-          echo "<a href = '../board/list_designed.php'>게시판</a>";
+          echo "<a href = '../board/list.php'>게시판</a>";
           exit;
         }?>
 

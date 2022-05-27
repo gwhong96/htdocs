@@ -4,15 +4,20 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
  ?>
-
- <!doctype html>
- <html>
- <head>
+<!doctype html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/tailwind.output.css" />
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+  <script src="./js/init-alpine.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </head>
 <body>
   <?php
   $boardInfo = array();
-  $boardID = '';
+  $boardID = '';//임시 선언
   // echo $_GET['boardID'];
   if(isset($_GET['boardID'])){
     $boardID = $_GET['boardID'];
@@ -28,15 +33,15 @@
       $boardInfo = $result -> fetch_array(MYSQLI_ASSOC);
     }else{
       echo "수정 권한이 없습니다."."<br>";
-      echo "<a href = './list_designed.php'> 게시글 목록으로 돌아가기</a>";
+      echo "<a href = './list.php'> 게시글 목록으로 돌아가기</a>";
       exit;
     }
-
   }else{
     echo "게시글 작성";
   }
-    // print_r( $boardInfo);
    ?>
+   <div class="w-full">
+
    <form name = "boardWrite" method = "post" action = "./write_ok.php" enctype="multipart/form-data">
      <input type="hidden" value='<?=$boardID?>' name = "boardID">
      제목

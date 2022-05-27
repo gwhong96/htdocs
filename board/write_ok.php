@@ -52,6 +52,7 @@
   }
 
   $uploadBase = '../upload/';
+
   foreach ($_FILES['upfile']['name'] as $f => $name) {
 
       $save_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
@@ -62,8 +63,6 @@
 
       move_uploaded_file($_FILES["upfile"]["tmp_name"][$f], $save_dir.$upfile);
 
-      echo $upfile;
-
       $sql_upload =  "INSERT INTO upload_file (boardID, fileName, originalName) ";
       $sql_upload .= "VALUES ('{$boardID}', '{$upfile}', '{$filename}')";
       $result_upload = $dbConnect->query($sql_upload);
@@ -73,12 +72,12 @@
 
   if($result){
     echo "저장 완료";
-    echo "<a href = './list_designed.php'> 게시글 목록으로 이동</a>";
+    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
     exit;
   }
   else{
     echo "저장 실패";
-    echo "<a href = './list_designed.php'> 게시글 목록으로 이동</a>";
+    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
     exit;
   }
  ?>
