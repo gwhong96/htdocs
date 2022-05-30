@@ -16,6 +16,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </head>
+
 <body>
   <h3><a href="./list.php"><img src="../img/logo.svg"></a></h3>
   <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">VIEW</h4>
@@ -63,21 +64,19 @@
           $uploadInfo = $result_upload -> fetch_array(MYSQLI_ASSOC);
           echo "<a href='../upload/{$uploadInfo['fileName']}' download> '{$uploadInfo['originalName']}'";
         }
+      }else{
+        echo "첨부파일 없음";
       }
       ?>
       </a><br><br>
-      <!--history에서 이전 페이지의 url을 불러와 이동-->
-      <!-- <?= "<button onclick='history.back()'>이전 페이지</button>"?> -->
-      <?= "<a href = './list.php'>게시글 목록</a>"?>
+      <!-- <?= "<a href = './list.php'>게시글 목록</a>"?> -->
 
       <?php
       if($contentInfo['nickName'] == $_SESSION['nickName']){
-        echo "<a href = './write.php?boardID={$boardID}'>게시글 수정</a>";
-        echo "<a href = './delete.php?boardID={$boardID}'>게시글 삭제</a>";
+        echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button>";
+        echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./delete.php?boardID={$boardID}'>게시글 삭제</a></button>";
       }
-      ?>
 
-    <?php
     }else{
       echo "잘못된 접근입니다.";
       echo "<a href = '../board/list.php'>게시판</a>";
@@ -99,8 +98,8 @@
             <input type="hidden" value ='0' name = "depth">
             <input type="hidden" value ='<?=$boardID?>' name = "boardID">
             <input type="hidden" value ='0' name = "replyPID">
-            <textarea name="reply" cols = "40" rows = "5" required></textarea>
-            <input type = "submit" value = "댓글 저장"/>
+            <textarea style = "background : lightgray" name="reply" cols = "40" rows = "5" required></textarea><br>
+            <button style = "background : gray" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">댓글 저장</button>
           </form>
           <br><br>
       <?php
@@ -129,11 +128,11 @@
               }
 
             ?>
-            <button class = 'button1' reply_id="<?=$replyID?>">답글</button>
+            <button class = 'button1 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background : gray" reply_id="<?=$replyID?>">답글</button>
             <?php
             if($replyInfo['writer'] == $_SESSION['nickName'] && $replyInfo['delYN'] == 'N'){?>
-              <button class = 'button2' modify_id="<?=$replyID?>">수정</button>
-              <?= "<a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a>"?>
+              <button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background : gray" modify_id="<?=$replyID?>">수정</button>
+              <?= "<button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style='background : gray'/><a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a></button>"?>
             <?php }?>
 
 
@@ -145,18 +144,16 @@
                 <input type="hidden" value ='<?=$depth?>' name = "depth">
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
                 <input type="hidden" value ='<?=$replyID?>' name = "replyPID">
-                <textarea name="reply" cols = "40" rows = "5" required></textarea>
-                <br>
-                <input type = "submit" value = "답글 저장"/>
+                <textarea style="background : lightgray" name="reply" cols = "30" rows = "3" required></textarea>
+                <button style = "background : gray" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 저장</button>
                 <br>
               </form>
 
               <form id = "replyModify<?=$replyID?>" method = "post" action="./reply_modify.php" style="display:none">
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
                 <input type="hidden" value ='<?=$replyID?>' name = "replyID">
-                <textarea name="reply" cols = "40" rows = "5" required><?=$replyInfo['reply']?></textarea>
-                <br>
-                <input type = "submit" value = "답글 수정"/>
+                <textarea style="background : lightgray" name="reply" cols = "30" rows = "3" required><?=$replyInfo['reply']?></textarea>
+                <button style = "background : gray" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 수정</button>
                 <br>
               </form>
               <?php

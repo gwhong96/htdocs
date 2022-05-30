@@ -34,6 +34,7 @@
       $boardInfo = $result -> fetch_array(MYSQLI_ASSOC);
     }else{
       echo "수정 권한이 없습니다."."<br>";
+      
       echo "<a href = './list.php'> 게시글 목록으로 돌아가기</a>";
       exit;
     }

@@ -58,8 +58,8 @@
       $save_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
       $filename = $_FILES["upfile"]["name"][$f];
       $ext = pathinfo($filename,PATHINFO_EXTENSION);//확장자 구하기
-      $newfilename = date("YmdHis").substr(rand(),0,6);
-      $upfile = $newfilename.".".$ext;//새로운 파일이름과 확장자를 합친다
+      $newfilename = date("YmdHis").substr(rand(),0,6);//파일 이름 중복 방지
+      $upfile = $newfilename.".".$ext;//새로운 파일 이름 + 확장자
 
       move_uploaded_file($_FILES["upfile"]["tmp_name"][$f], $save_dir.$upfile);
 
