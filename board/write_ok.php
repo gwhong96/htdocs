@@ -34,40 +34,50 @@
   }
 
   $regTime = date("Y-m-d H:i:s");//등록시간(timezone 설정 확인)
-
   $memberID = $_SESSION['memberID'];//현재 로그인한 회원의 ID
 
   $title = xss_clean($title);
-  $content = xss_clean($content);
-// str_replace('<script>/dfsff/</script>', '')
+  $content = xss_clean($content);//xss 방어
+
   if($_POST['boardID'] != ''){//게시글 수정시
     $boardID = $_POST['boardID'];
     $sql = "UPDATE board SET title = '{$title}', content = '{$content}', boardPW = '{$boardPW}', disYN = '{$disYN}', lastUpdate = '{$regTime}'";
-
-//     $sql =<<<SQL
-//       UPDATE board
-//        SET  content = ?
-//          , disPW   = ?
-//      SQL;
-
-    //업데이트 쿼리 날리는 시간 = 수정시간
     $sql .= "WHERE boardID = ".$boardID;
+    $result = $dbConnect->query($sql);//입력 받은 값을 쿼리문을 통해 DB로 전달
   }else{//게시글 신규 작성시
-
     $sql = "INSERT INTO board (title, memberID, content, disYN, boardPW, regTime, lastUpdate)";
     $sql .= "VALUES ('{$title}', '{$memberID}','{$content}', '{$disYN}', '{$boardPW}','{$regTime}','{$regTime}')";
+    $result = $dbConnect->query($sql);//입력 받은 값을 쿼리문을 통해 DB로 전달
+    $boardID = mysqli_insert_id($dbConnect);//직전에 insert된 row의 pk값을 받아 첨부파일 테이블에 넣기위함
   }
 
-  $result = $dbConnect->query($sql);//입력 받은 값을 쿼리문을 통해 DB로 전달
+  $uploadBase = '../upload/';
+
+  foreach ($_FILES['upfile']['name'] as $f => $name) {
+
+      $save_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
+      $filename = $_FILES["upfile"]["name"][$f];
+      $ext = pathinfo($filename,PATHINFO_EXTENSION);//확장자 구하기
+      $newfilename = date("YmdHis").substr(rand(),0,6);
+      $upfile = $newfilename.".".$ext;//새로운 파일이름과 확장자를 합친다
+
+      move_uploaded_file($_FILES["upfile"]["tmp_name"][$f], $save_dir.$upfile);
+
+      $sql_upload =  "INSERT INTO upload_file (boardID, fileName, originalName) ";
+      $sql_upload .= "VALUES ('{$boardID}', '{$upfile}', '{$filename}')";
+      $result_upload = $dbConnect->query($sql_upload);
+
+    }
+
 
   if($result){
     echo "저장 완료";
-    echo "<a href = './list_designed.php'> 게시글 목록으로 이동</a>";
+    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
     exit;
   }
   else{
     echo "저장 실패";
-    echo "<a href = './list_designed.php'> 게시글 목록으로 이동</a>";
+    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
     exit;
   }
  ?>

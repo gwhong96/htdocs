@@ -2,14 +2,14 @@
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
-  include $_SERVER['DOCUMENT_ROOT'].'./board/func/passwordCheck';
+  include $_SERVER['DOCUMENT_ROOT'].'./board/func/passwordCheck.php';
 
   $email = $_POST['userEmail'];//signInForm에서 받아온 데이터
   $pw = $_POST['userPW'];
 
   function goSignInPage($alert){//alert 알림문구
     echo $alert.'<br>';
-    echo "<a href = './signInForm.php'>로그인</a>";
+    echo "<a href = './index.php'>로그인</a>";
     return;
   }
 

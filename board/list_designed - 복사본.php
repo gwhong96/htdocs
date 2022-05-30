@@ -1,5 +1,4 @@
 <?php
-	// require_once("../dbconfig.php");
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
@@ -7,26 +6,26 @@
 ?>
 
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 	<meta charset="utf-8" />
-
 	<title>QnA 게시판 | nasmedia</title>
-  <link rel="stylesheet" href="./css/sandstone.css">
-	<link rel="stylesheet" href="./css/normalize.css" />
-	<link rel="stylesheet" href="./css/board.css" />
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  <link rel="stylesheet" href="./assets/css/tailwind.output.css" />
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+        defer
+    ></script>
+  <script src="./assets/js/init-alpine.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <!-- <style>
 table.type11 { border-collapse: separate; border-spacing: 1px; text-align: center; line-height: 1.5; margin: 20px 10px;}
 table.type11 th { width: 155px; padding: 10px; font-weight: bold; vertical-align: top; color: #fff; background: #ce481f ;}
 table.type11 td { width: 155px; padding: 10px; vertical-align: top; border-bottom: 1px solid #ccc; background: #eee;}
 table.type11 td:hover {  background: #555;}
-
-</style>
+</style> -->
 </head>
 
 <body>
@@ -36,7 +35,7 @@ table.type11 td:hover {  background: #555;}
   <a href = "./list_designed.php">초기화</a>
 	<article class="boardArticle">
 
-		<h3>QnA</h3>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Q&A</h4>
 
 		<table class="type11" border="1" style="" id=asdasdasd>
 
@@ -55,6 +54,8 @@ table.type11 td:hover {  background: #555;}
 					<th scope="col" class="date">작성일</th>
 
 					<th scope="col" class="hit">조회수</th>
+
+          <th scope="col">히스토리</th>
 
 				</tr>
 
@@ -128,8 +129,6 @@ table.type11 td:hover {  background: #555;}
             $sqlCount = "SELECT count(boardID) FROM board WHERE delYN = 'N';";
             $totalCount = $dbConnect -> query($sqlCount);
             $totalCount = $totalCount -> fetch_array(MYSQLI_ASSOC);
-            // print_r ($totalCount['count(boardID)']);//총 게시물 갯수
-
 
             if($result){
               $dataCount = $result->num_rows;
@@ -145,16 +144,13 @@ table.type11 td:hover {  background: #555;}
                       echo "<img src = '../img/lock.png' title = 'lock' width = '20' height ='20' />";
                   }else{
                       echo "<td><a href = '../board/view.php?boardID={$memberInfo['boardID']}'>";//상세보기 페이지 이동링크
-
                   }
-
                   echo $memberInfo['title'];
-
                   echo "</a></td>";
                   echo "<td>{$memberInfo['nickName']}</td>";
-                  // echo "<td><script>alert('asdad')</script></td>";
                   echo "<td>{$memberInfo['regTime']}</td>";
                   echo "<td>{$memberInfo['views']}</td>";
+                  echo "<td><a href='history.php?boardID={$memberInfo['boardID']}' target = '_blank' onclick='window.open(this.href,'팝업창','width=100, height=100');'>log<a/></td>";
                   echo "</tr>";
                 }
               }else{
