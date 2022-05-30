@@ -28,11 +28,13 @@
 <h3><a href="./list.php"><img src="../img/logo.svg"/></a></h3>
 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Q&A</h4>
 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
-  <button type="button" style="background : gray; margin-left : 10%" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./write.php';">게시글 작성</button>
-  <button type="button" style="background : gray; margin-left : 30%" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signOut.php';">로그아웃</button>
-  <button type="button" style="background : gray" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signUpForm.php';">회원정보 수정</button>
-  <div style="padding-left:100px; padding-right:100px" class="w-full overflow-x-auto">
-		<table style = "width : 70%" class="w-full whitespace-no-wrap">
+<div style="padding-left:250px; padding-right:250px;">
+  <button type="button" style="background : gray;" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./write.php';">게시글 작성</button>
+  <button type="button" style="background : gray; float:right" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signOut.php';">로그아웃</button>
+  <button type="button" style="background : gray; float:right; margin-right:10px" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signUpForm.php';">회원정보 수정</button>
+</div>
+  <div style="padding-left:250px; padding-right:250px" class="w-full overflow-x-auto">
+		<table class="w-full">
       <thead>
         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
           <th class="th_sty px-4 py-3">Number</th>
@@ -156,12 +158,12 @@
   </div>
 
 
-  <div class="grid px-4 py-3 text-xs font-semibold text-gray-500 uppercase sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800" style="text-align : center">
-
-
+  <div class="grid px-4 py-3 text-xs font-semibold text-gray-500 uppercase sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800" style="padding-left:250px ;text-align : center">
     <?php include $_SERVER['DOCUMENT_ROOT'].'../board/paging.php'; ?>
 </div>
+<div class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase" style="padding-right:300px; float:right">
 <?php include $_SERVER['DOCUMENT_ROOT'].'../board/search.php';?>
+</div>
 </div>
 </body>
 </html>
