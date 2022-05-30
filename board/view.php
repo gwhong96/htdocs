@@ -29,7 +29,7 @@
   }//url을 통한 부정 접근 방지
 
   if(isset($_GET['boardID']) && (int) $_GET['boardID'] > 0){
-    if($referer == ''){exit("잘못된 접근입니다.");}//url을 따라 접근하게 되면 이전 페이지 url이 '' 임으로 걸러낼 수 있다.
+    if($referer == ''){exit("잘못된 접근입니다.");}
 
     $boardID = $_GET['boardID'];
     $sql = "SELECT b.title, b.content, m.nickName, b.regTime, b.lastUpdate, b.disYN, b.attach FROM board b ";
@@ -162,8 +162,7 @@
             echo "댓글이 없습니다.";
           }
         }else{
-          echo "잘못된 접근입니다.";
-          echo "<a href = '../board/list.php'>게시판</a>";
+          echo "<script type='text/javascript'>alert('잘못된 접근입니다.');window.location = './list.php';</script>";
           exit;
         }?>
 
