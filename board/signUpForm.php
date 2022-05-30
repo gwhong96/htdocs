@@ -71,7 +71,7 @@ $(function(){ //jquery  달력 UI위젯 datepicker
 
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Password</span>
-                <input type = "password" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name = "userPW" required>
+                <input style="background:lightgray" type = "password" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name = "userPW" required>
               </label>
 
               <label class="block mt-4 text-sm">
@@ -81,7 +81,7 @@ $(function(){ //jquery  달력 UI위젯 datepicker
               </label>
               <br>
               <label>
-                <span class="text-gray-700 dark:text-gray-400">BirthDay</span>
+                <span class="text-gray-700 dark:text-gray-400">Birth-Date : </span>
                 <?php
                   if(isset($memberInfo['memberID'])){
                 ?>

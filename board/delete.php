@@ -13,13 +13,11 @@
   $result = $dbConnect -> query($sql);
 
   if($result){
-    echo "삭제 완료";
-    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
+    echo "<script type='text/javascript'>alert('삭제 완료');window.location = './list.php';</script>";
     exit;
   }
-  else{
-    echo "삭제 실패";
-    echo "<a href = './list.php'> 게시글 목록으로 이동</a>";
+  else{    
+    echo "<script type='text/javascript'>alert('삭제 실패');window.location = './list.php';</script>";
     exit;
   }
 
