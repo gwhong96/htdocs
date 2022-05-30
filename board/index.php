@@ -1,7 +1,7 @@
 <!-- 초기화면 -->
 <?php
-  include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
-  include $_SERVER['DOCUMENT_ROOT'].'./board/passwordCheck.php';
+  include $_SERVER['DOCUMENT_ROOT'].'/board/session.php';
+  include $_SERVER['DOCUMENT_ROOT'].'/board/func/passwordCheck.php';
 ?>
 
 <!doctype html>
@@ -67,18 +67,10 @@
                 <!-- <a href = "./board/signUpForm.php";>회원가입</a> -->
               </div>
             </div>
-
-  <!-- <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onclick="location.href='./signUpForm.php';">회원가입</button><br>
-  <button type="button" class="items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onclick="location.href='./signInForm.php';">로그인</button><br> -->
    <?php } else {//로그인 되어있으면 ?>
 
      <meta http-equiv="refresh" content="0;url=./list.php">
 
-    <!-- <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onclick="location.href='./list.php';">게시판</button><br>
-    <br>
-    <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onclick="location.href='./signUpForm.php';">회원정보 수정</button><br>
-    <br>
-    <button class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onclick="location.href='./signOut.php';">로그아웃</button><br> -->
     <?php
     }
    ?>
