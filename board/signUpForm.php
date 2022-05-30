@@ -61,12 +61,12 @@ $(function(){ //jquery  달력 UI위젯 datepicker
             <?php } ?>
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">E-mail</span>
-                <input style = "background-color : rgb(233, 233, 233)" type = "email" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name = "userEmail" value = "<?= (isset($memberInfo['email']) ? $memberInfo['email'] : '') ?>" required>
+                <input style = "background-color : lightgray" type = "email" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name = "userEmail" value = "<?= (isset($memberInfo['email']) ? $memberInfo['email'] : '') ?>" required>
               </label>
 
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Nick-name</span>
-                <input style = "background-color : rgb(233, 233, 233)" type = "text" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name = "userNickName" value = "<?= (isset($memberInfo['nickName']) ? $memberInfo['nickName'] : '') ?>" required>
+                <input style = "background-color : lightgray" type = "text" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name = "userNickName" value = "<?= (isset($memberInfo['nickName']) ? $memberInfo['nickName'] : '') ?>" required>
               </label>
 
               <label class="block mt-4 text-sm">
