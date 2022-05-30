@@ -15,10 +15,11 @@
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 </head>
 <body>
+  <h3><a href="./list.php"><img src="../img/logo.svg"/></a></h3>
   <?php
   $boardInfo = array();
-  $boardID = '';//임시 선언
-  // echo $_GET['boardID'];
+  $boardID = '';
+
   if(isset($_GET['boardID'])){
     $boardID = $_GET['boardID'];
     $sql = "SELECT m.memberID FROM member m JOIN board b ON (m.memberID = b.memberID) WHERE boardID = "."$boardID";
@@ -37,7 +38,7 @@
       exit;
     }
   }else{
-    echo "게시글 작성";
+    echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>게시글 작성</h4>";
   }
    ?>
    <div class="w-full">
@@ -46,11 +47,11 @@
      <input type="hidden" value='<?=$boardID?>' name = "boardID">
      제목
      <br>
-     <input type = "text" name = "title" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
+     <input style = "background-color : rgb(233, 233, 233)" type = "text" name = "title" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
      <br><br>
      내용
      <br>
-     <textarea name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+     <textarea style = "background-color : rgb(233, 233, 233)" name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
      <br>
      파일 첨부
      <input type="file" name="upfile[]" multiple='multiple'>
@@ -69,7 +70,7 @@
      ?>
      <input type = "checkbox" name = "disYN" value = "N" <?= $checkYN ?>/>
      <br>
-     비밀번호 <input type = "text" name = "boardPW">
+     비밀번호 <input style = "background-color : rgb(233, 233, 233)" type = "text" name = "boardPW">
      <br><br>
      <input type = "submit" value = "저장"/>
      <!--작성 완료-->
