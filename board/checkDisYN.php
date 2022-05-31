@@ -27,7 +27,7 @@
 
 <div id='writepass'>
 	<form action="" method="post">
- 		<p>비밀번호<input type="text" name="checkPW" /> <input type="submit" value="확인" /></p>
+ 		<p>비밀번호<input type="password" name="checkPW" /> <input type="submit" value="확인" /></p>
  	</form>
 </div>
 

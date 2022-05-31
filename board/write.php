@@ -26,15 +26,19 @@
     $result2 = $dbConnect -> query($sql);
     $boardInfo2 = $result2 -> fetch_array(MYSQLI_ASSOC);
 
+    $sql_up = "SELECT * FROM upload_file WHERE boardID = {$boardID}";
+    $result_up = $dbConnect -> query($sql_up);
+    $uploadInfo = $result_up -> fetch_array(MYSQLI_ASSOC);
+
     if($boardInfo2['memberID'] == $_SESSION['memberID']){//현재 로그인 계정과 게시글 작성자가 같을때
-      echo "게시글 수정";
+      echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>Write</h4>";
       $boardID = $_GET['boardID'];
       $sql = "select * from board where boardID = {$boardID}";
       $result = $dbConnect -> query($sql);
       $boardInfo = $result -> fetch_array(MYSQLI_ASSOC);
     }else{
       echo "수정 권한이 없습니다."."<br>";
-      
+
       echo "<a href = './list.php'> 게시글 목록으로 돌아가기</a>";
       exit;
     }
@@ -42,23 +46,30 @@
     echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>게시글 작성</h4>";
   }
    ?>
-   <div class="w-full">
 
+<div class="flex items-center justify-center p-6 sm:p-12">
+   <div class="w-full" style = "padding-left:20%">
    <form name = "boardWrite" method = "post" action = "./write_ok.php" enctype="multipart/form-data">
      <input type="hidden" value='<?=$boardID?>' name = "boardID">
-     제목
+     <label class="block text-sm">
+       <span class="text-gray-700 dark:text-gray-400">Title</span>
      <br>
-     <input style = "background-color : rgb(233, 233, 233)" type = "text" name = "title" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
-     <br><br>
-     내용
+     <input style = "background-color : lightgray" type = "text" name = "title" class="block mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
+    </label>
      <br>
-     <textarea style = "background-color : rgb(233, 233, 233)" name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+     <label class="block text-sm">
+     <span class="text-gray-700 dark:text-gray-400">Content</span>
      <br>
-     파일 첨부
-     <input type="file" name="upfile[]" multiple='multiple'>
+     <textarea style = "background-color : lightgray" name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+    </label>
+     <br>
+     <label class="block text-sm">
+     <span class="text-gray-700 dark:text-gray-400">Upload File</span>
+     <input type="file" name="upfile[]" multiple='multiple' checked><?= (isset($uploadInfo['originalName']) ? $uploadInfo['originalName'] : '') ?></input>
+    </label>
      <!-- 다중 첨부파일 추가 -->
-     <br><br>
-     비공개
+     <br>
+     <span class="text-gray-700 dark:text-gray-400">Lock</span>
      <?php
      if(isset($boardInfo['disYN'])){//게시글 수정일때
 
@@ -69,11 +80,13 @@
        }
      }else{$checkYN = "";}//게시글 작성일땐 체크 안함
      ?>
-     <input type = "checkbox" name = "disYN" value = "N" <?= $checkYN ?>/>
-     <br>
-     비밀번호 <input style = "background-color : rgb(233, 233, 233)" type = "text" name = "boardPW">
-     <br><br>
-     <input type = "submit" value = "저장"/>
+     <input type = "checkbox" name = "disYN" value = "N" <?= $checkYN ?>/><br>
+     <span class="text-gray-700 dark:text-gray-400">Password</span>
+     <input style = "background-color : lightgray" type = "password" name = "boardPW">
+     <button style="background:gray; float:right" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" type = "submit">저장</button>
+</div>
+</div>
+
      <!--작성 완료-->
    </form>
 </body>

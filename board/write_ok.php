@@ -69,7 +69,6 @@
 
     }
 
-
   if($result){
     echo "<script type='text/javascript'>alert('저장 완료');window.location = './list.php';</script>";
     exit;

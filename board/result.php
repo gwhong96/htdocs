@@ -2,9 +2,14 @@
 <?php
 include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
 // include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
+include $_SERVER['DOCUMENT_ROOT'].'./board/func/xssCheck.php';
 include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
 
   $searchKeyword = $dbConnect -> real_escape_string($_GET['searchKeyword']);//real_escape_string = injection 방지
+  // $searchKeyword = mysql_real_escape_string($searchKeyword);
+  // $searchKeyword = $_GET['option']
+  // $searchKeyword = xss_clean($_GET['searchKeyword']);
+
   $searchOption = $dbConnect -> real_escape_string($_GET['option']);
 
   if($searchKeyword == '' || $searchKeyword == null){
@@ -29,7 +34,7 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
 
   switch($searchOption){
     case 'title':
-      $sql .= "WHERE b.title LIKE '%{$searchKeyword}%'";// 키워드가 속한 모든 내용
+      $sql .= "WHERE b.title LIKE "."%{$searchKeyword}%";// 키워드가 속한 모든 내용
       break;
     case 'content':
       $sql .= "WHERE b.content LIKE '%{$searchKeyword}%'";
@@ -37,9 +42,6 @@ include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
     case 'writer':
       $sql .= "WHERE m.nickName LIKE '%{$searchKeyword}%'";//작성자 검색
       break;
-    // case 'tandc':
-    //   $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' AND b.content LIKE '%{$searchKeyword}%'";
-    //   break;
     case 'torc':
       $sql .= "WHERE b.title LIKE '%{$searchKeyword}%' OR b.content LIKE '%{$searchKeyword}%'";
       break;

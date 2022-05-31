@@ -6,17 +6,24 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/func/mailCheck.php';//이메일 정규식 체크용 include
 
   //signUp.php 에서 form태그로 입력받은 데이터들을 변수로 받음
-  $email = $_POST['userEmail'];
-  $nickName = $_POST['userNickName'];
-  $pw = $_POST['userPW'];
-  $gender = $_POST['gender'];
-  $birth = $_POST['birth'];
+  $email     = $_POST['userEmail'];
+  $nickName  = $_POST['userNickName'];
+  $pw        = $_POST['userPW'];
+  $pw_ch     = $_POST['userPW_check'];
+  $gender    = $_POST['gender'];
+  $birth     = $_POST['birth'];
 
   function goSignUpPage($alert){//입력값이 적합하지 않을 시 다시 회원가입 페이지로 이동
-    echo $alert.'<br>';
+    // echo $alert.'<br>';
     // echo "<a href = './signUpForm.php'>다시 입력</a>";
-    echo "<button onclick='history.back()'>다시 입력하기</button>";
+    // echo "<button onclick='history.back()'>다시 입력하기</button>";
+    echo "<script type='text/javascript'>alert('{$alert}');window.location = './signUpForm.php';</script>";
     return;
+  }
+
+  if($pw != $pw_ch){
+    goSignUpPage('비밀번호 재확인');
+    exit;
   }
 
   if(!filter_Var($email,FILTER_VALIDATE_EMAIL)){//php 함수를 이용한 email형식 검사
