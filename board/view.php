@@ -69,8 +69,6 @@
       }
       ?>
       </a><br><br>
-      <!-- <?= "<a href = './list.php'>게시글 목록</a>"?> -->
-
       <?php
       if($contentInfo['nickName'] == $_SESSION['nickName']){
         echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button>";
@@ -108,6 +106,7 @@
               $replyInfo  = $result -> fetch_array(MYSQLI_ASSOC);
               $depth      = $replyInfo['replyDepth'];
               $replyID    = $replyInfo['replyID'];
+              $modify     = $replyInfo['modifyDate'];
 
               echo "<div>";
               if($depth == 0){//댓글
@@ -121,7 +120,7 @@
 
               if($replyInfo['delYN'] == 'N'){
                 echo $replyInfo['writer']."&nbsp:&nbsp";
-                echo $replyInfo['reply']."&nbsp&nbsp&nbsp";
+                echo nl2br($replyInfo['reply'])."&nbsp&nbsp&nbsp";              
                 echo $replyInfo['replyDate']."&nbsp";
               }else{
                 echo "삭제된 댓글 입니다.";
@@ -130,7 +129,7 @@
             ?>
             <button class = 'button1 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background : gray" reply_id="<?=$replyID?>">답글</button>
             <?php
-            if($replyInfo['writer'] == $_SESSION['nickName'] && $replyInfo['delYN'] == 'N'){?>
+            if($replyInfo['writerID'] == $_SESSION['memberID'] && $replyInfo['delYN'] == 'N'){?>
               <button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background : gray" modify_id="<?=$replyID?>">수정</button>
               <?= "<button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style='background : gray'/><a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a></button>"?>
             <?php }?>
@@ -138,6 +137,7 @@
 
             <?php
               echo "</div><br>";
+
               ?>
               <form id = "replyWrite<?=$replyID?>" method = "post" action="./reply_ok.php" style="display:none">
                 <input type="hidden" value ='<?=$replyInfo['replyOrder']?>' name = "order">

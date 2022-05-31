@@ -52,7 +52,9 @@
           //검색
           if(isset($_GET['searchKeyword'])){
             $searchKeyword = $_GET['searchKeyword'];
+            $searchKeyword = addslashes($searchKeyword);//역슬레쉬를 붙여 ''이스케이프
             $searchOption = $_GET['option'];
+
 
             if($searchKeyword == '' || $searchKeyword == null){
               echo "검색어가 없습니다.";
@@ -88,6 +90,8 @@
             $sqlCount = "SELECT count(boardID) FROM board b JOIN member m ";
             $sqlCount .= "ON (b.memberID = m.memberId) ";
 
+
+
             if(isset($_GET['searchKeyword'])){
               switch($searchOption){//검색 옵션별 where 쿼리
                 case 'title':
@@ -111,14 +115,11 @@
               $sqlCount .= "WHERE b.delYN = 'N' ";
             }
 
-
             $sql .= "ORDER BY boardID ";
             $sql .= "DESC LIMIT {$firstLimitValue}, {$numView}";
 
-
             $result = $dbConnect->query($sql);//페이징이나 검색조건에 부합하는 값들만이 담
 
-            // $sqlCount = "SELECT count(boardID) FROM board WHERE delYN = 'N' ";
             $totalCount = $dbConnect -> query($sqlCount);
             $totalCount = $totalCount -> fetch_array(MYSQLI_ASSOC);
 
@@ -156,10 +157,12 @@
 			</tbody>
 		</table>
   </div>
-
-
   <div class="grid px-4 py-3 text-xs font-semibold text-gray-500 uppercase sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800" style="padding-left:250px ;text-align : center">
-    <?php include $_SERVER['DOCUMENT_ROOT'].'../board/paging.php'; ?>
+    <?php
+    if($dataCount != 0){
+        include $_SERVER['DOCUMENT_ROOT'].'../board/paging.php';
+    }
+     ?>
 </div>
 <div class="px-4 py-3 text-xs font-semibold text-gray-500 uppercase" style="padding-right:300px; float:right">
 <?php include $_SERVER['DOCUMENT_ROOT'].'../board/search.php';?>

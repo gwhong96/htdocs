@@ -16,7 +16,7 @@
     echo "<script type='text/javascript'>alert('삭제 완료');window.location = './list.php';</script>";
     exit;
   }
-  else{    
+  else{
     echo "<script type='text/javascript'>alert('삭제 실패');window.location = './list.php';</script>";
     exit;
   }

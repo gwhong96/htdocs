@@ -19,6 +19,7 @@
     $sql .=" AND delYN = 'N'";
 
   $result = $dbConnect -> query($sql);
+  
 
   $boardTotalCount = $result ->fetch_array(MYSQLI_ASSOC);//컬럼명으로 호출
   $boardTotalCount = $boardTotalCount['count(boardID)'];//전체 게시글 수
@@ -31,11 +32,11 @@
       $link =  '';
     }
 
-  echo "<a href = './list.php?page=1{$link}'>first</a>";
+  echo "<a href = './list.php?page=1{$link}'>FIRST</a>";
 
   if($page != 1){
     $previousPage = $page - 1;
-    echo "<a href='./list.php?page={$previousPage}{$link}'>prev</a>";
+    echo "<a href='./list.php?page={$previousPage}{$link}'>PREV</a>";
   }//이전 페이지 이동 링크
 
   $pageTerm = 5;//앞뒤 페이지 표시 갯수
