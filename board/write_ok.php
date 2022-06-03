@@ -66,7 +66,6 @@
       $sql_upload =  "INSERT INTO upload_file (boardID, fileName, originalName) ";
       $sql_upload .= "VALUES ('{$boardID}', '{$upfile}', '{$filename}')";
       $result_upload = $dbConnect->query($sql_upload);
-
     }
 
   if($result){

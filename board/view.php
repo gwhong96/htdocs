@@ -9,6 +9,7 @@
 <!doctype html>
 <html>
 <head>
+  <title>View | nasmedia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="./css/tailwind.output.css" />
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -48,16 +49,18 @@
       $v_sql = "UPDATE board set views = views + 1 where boardID = {$boardID} ";//조회수 증가용 쿼리
       $v_result = $dbConnect -> query($v_sql);
       ?>
-
-      <?= "제목 : ".$contentInfo['title']."<br>"?>
-      <?= "작성자 : ".$contentInfo['nickName']."<br>"?>
-      <?php $regTime = date("Y-m-d H:i:s") ?>
-      <?= "게시일 : ".$contentInfo['regTime']."<br><br>"?>
-      <?= "내용 : <br>"?>
-      <?= nl2br($contentInfo['content'])."<br>"?>
-      <?= "마지막 수정 : "?>
-      <?= $contentInfo['lastUpdate']."<br><br>"?>
-      <?= "첨부파일 : "?>
+      <div class="flex items-center p-6 bg-gray-50 dark:bg-gray-900">
+        <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg dark:bg-gray-800">
+          <div class="w-full" style="width:80%">
+            <span style="color: rgb(64,64,64);" class="mb-4 text-2xl font-semibold text-gray-700"> <?=$contentInfo['title']?> </span>
+            <span class="text-xs text-gray-700">by</span>
+            <span class="text-xl" style="color:gray"><?=$contentInfo['nickName']?></span> <br><br>
+            <?php $regTime = date("Y-m-d H:i:s") ?>
+            <span style="float:right">Wirten : <?=$contentInfo['regTime']?></span><br>
+            <span style="float:right">Modified : <?= $contentInfo['lastUpdate']?></span><br><br><br>
+            <p style="width:80%; color: rgb(64,64,64);padding-bottom:30%"><?=nl2br($contentInfo['content'])?></p>
+            <br><br><br><br>
+            <?= "첨부파일 : "?>
       <?php
       if($dataCount2 > 0){//첨부파일이 존재한다면
         for($i = 0; $i < $dataCount2; $i++){//첨부파일 갯수만큼 반복
@@ -71,10 +74,9 @@
       </a><br><br>
       <?php
       if($contentInfo['nickName'] == $_SESSION['nickName']){
-        echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button>";
+        echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button> ";
         echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./delete.php?boardID={$boardID}'>게시글 삭제</a></button>";
       }
-
     }else{
       echo "잘못된 접근입니다.";
       echo "<a href = '../board/list.php'>게시판</a>";
@@ -120,7 +122,7 @@
 
               if($replyInfo['delYN'] == 'N'){
                 echo $replyInfo['writer']."&nbsp:&nbsp";
-                echo nl2br($replyInfo['reply'])."&nbsp&nbsp&nbsp";              
+                echo nl2br($replyInfo['reply'])."&nbsp&nbsp&nbsp";
                 echo $replyInfo['replyDate']."&nbsp";
               }else{
                 echo "삭제된 댓글 입니다.";

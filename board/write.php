@@ -13,6 +13,8 @@
   <script src="./js/init-alpine.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="../se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
   <h3><a href="./list.php"><img src="../img/logo.svg"/></a></h3>
@@ -46,7 +48,6 @@
     echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>게시글 작성</h4>";
   }
    ?>
-
 <div class="flex items-center justify-center p-6 sm:p-12">
    <div class="w-full" style = "padding-left:20%">
    <form name = "boardWrite" method = "post" action = "./write_ok.php" enctype="multipart/form-data">
@@ -60,12 +61,13 @@
      <label class="block text-sm">
      <span class="text-gray-700 dark:text-gray-400">Content</span>
      <br>
-     <textarea style = "background-color : lightgray" name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+     <textarea name="content" id="ir1" rows="10" cols="100"><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+     <!-- <textarea style = "background-color : lightgray" name = "content" cols = "80" rows = "10" required><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea> -->
     </label>
      <br>
      <label class="block text-sm">
      <span class="text-gray-700 dark:text-gray-400">Upload File</span>
-     <input type="file" name="upfile[]" multiple='multiple' checked><?= (isset($uploadInfo['originalName']) ? $uploadInfo['originalName'] : '') ?></input>
+     <input style="background:gray" type="file" name="upfile[]" multiple='multiple' class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" > </input>
     </label>
      <!-- 다중 첨부파일 추가 -->
      <br>
@@ -81,13 +83,41 @@
      }else{$checkYN = "";}//게시글 작성일땐 체크 안함
      ?>
      <input type = "checkbox" name = "disYN" value = "N" <?= $checkYN ?>/><br>
-     <span class="text-gray-700 dark:text-gray-400">Password</span>
+     <span class = "text-gray-700 dark:text-gray-400">Password</span>
      <input style = "background-color : lightgray" type = "password" name = "boardPW">
-     <button style="background:gray; float:right" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" type = "submit">저장</button>
+     <button id="savebutton" style = "background:gray; float:right; margin-right:45%" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" type = "submit">저장</button>
+   </form>
 </div>
 </div>
 
      <!--작성 완료-->
-   </form>
+
 </body>
+<script type="text/javascript">
+
+$(function(){    //전역변수선언
+      var editor_object = [];
+           nhn.husky.EZCreator.createInIFrame({
+            oAppRef: editor_object,
+            elPlaceHolder: "ir1",
+            sSkinURI: "../se2/SmartEditor2Skin.html",
+            htParams : {// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+                  bUseToolbar : true,// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+                  bUseVerticalResizer : true,// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+                  bUseModeChanger : true,
+     }    
+   });
+   //전송버튼 클릭이벤트
+   $("#savebutton").click(function(){//id가 smarteditor인 textarea에 에디터에서 대입
+             editor_object.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+     // 이부분에 에디터 validation 검증
+     //폼 submit
+     $("#form").submit();
+    })
+})
+
+
+
+
+</script>
 </html>
