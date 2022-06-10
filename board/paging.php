@@ -19,7 +19,7 @@
     $sql .=" AND delYN = 'N'";
 
   $result = $dbConnect -> query($sql);
-  
+
 
   $boardTotalCount = $result ->fetch_array(MYSQLI_ASSOC);//컬럼명으로 호출
   $boardTotalCount = $boardTotalCount['count(boardID)'];//전체 게시글 수
@@ -32,11 +32,11 @@
       $link =  '';
     }
 
-  echo "<a href = './list.php?page=1{$link}'>FIRST</a>";
+  echo "<a href = './list.php?page=1{$link}'><em class='fa fa-angle-double-left' style='color:gray;'></em></a>";
 
   if($page != 1){
     $previousPage = $page - 1;
-    echo "<a href='./list.php?page={$previousPage}{$link}'>PREV</a>";
+    echo "<a href='./list.php?page={$previousPage}{$link}'><em class='fa fa-angle-left' style='color:gray;'></em></a>";
   }//이전 페이지 이동 링크
 
   $pageTerm = 5;//앞뒤 페이지 표시 갯수
@@ -60,8 +60,8 @@
   }
   if($page != $totalPage){//다음 페이지가 있다면
     $nextPage = $page + 1;
-    echo "<a href = './list.php?page={$nextPage}{$link}'>NEXT</a>";//다음페이지 버튼 활성화
+    echo "<a href = './list.php?page={$nextPage}{$link}'><em class='fa fa-angle-right' style='color:gray;'></em></a>";//다음페이지 버튼 활성화
   }
-  echo "<a href = './list.php?page={$totalPage}{$link}'>LAST</a>";
+  echo "<a href = './list.php?page={$totalPage}{$link}'><em class='fa fa-angle-double-right' style='color:gray;'></em></a>";
 
  ?>

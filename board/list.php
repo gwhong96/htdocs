@@ -22,6 +22,8 @@
   <script src="./js/init-alpine.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  <script src="https://kit.fontawesome.com/aee31d5c5a.js"></script>
 </head>
 <body>
 
@@ -29,9 +31,15 @@
 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Q&A</h4>
 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
 <div style="padding-left:250px; padding-right:250px;">
-  <button type="button" style="background : gray;" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./write.php';">게시글 작성</button>
-  <button type="button" style="background : gray; float:right" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signOut.php';">로그아웃</button>
-  <button type="button" style="background : gray; float:right; margin-right:10px" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signUpForm.php';">회원정보 수정</button>
+  <!-- <button type="button" style="padding-left:50px" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./write.php';"><em class="fa fa-pencil-square-o" style="color:black"></em></button> -->
+  <a style="padding-left:55px" href="./write.php"><em class='fa fa-pencil-square-o' style='color:gray;'></em></a>
+  <!-- <button type="button" style="float:right; margin-right:30px" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signOut.php';"><em class="fa fa-power-off" style="color:#CE181E"></em></button> -->
+  <a style="float:right; margin-right:30px" href="./signOut.php"><em style="color:#CE181E" class="fa fa-power-off"></em></a>
+  <!-- <button type="button" style="float:right; margin-right:10px" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./signUpForm.php';"><em class="fa fa-user" style="color:#231F20"></em></button> -->
+  <a style="float:right; margin-right:30px" href="./signUpForm.php"><em style="color:gray" class="fa fa-user"></em></a>
+  <!-- <button type="button" style="float:right; margin-right:10px" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg" onclick="location.href='./csvOutput.php';"><em class="fa fa-file-o" style="color:#231F20"></em></button> -->
+  <a style="float:right; margin-right:30px" href="./csvOutput.php"><em class="fa fa-file-o" style="color:gray"></em></a>
+
 </div>
   <div style="padding-left:250px; padding-right:250px" class="w-full overflow-x-auto">
 		<table class="w-full">
@@ -130,7 +138,7 @@
                   $memberInfo = $result->fetch_array(MYSQLI_ASSOC);
                   // $title = htmlspecialchars($memberInfo['title']);
                   echo "<tr class='text-gray-700 dark:text-gray-400'>";
-                  echo "<td class='th_sty px-4 py-3'>";
+                  echo "<td style ='color:#231F20' class='th_sty px-4 py-3'>";
                   echo "<div class='px-2 py-1'><p class='font-semibold'>";
                   echo ($totalCount['count(boardID)']-$i-(($page-1)*$numView))."</p>";
                   echo "</div></td>";//총 게시글 수 boardID와 무관하게 역순정렬
@@ -146,7 +154,9 @@
                   echo "<td class='th_sty text-gray-500 px-4 py-3 text-sm'>{$memberInfo['nickName']}</td>";
                   echo "<td class='th_sty text-gray-500 px-4 py-3 text-xs'>{$memberInfo['regTime']}</td>";
                   echo "<td class='th_sty text-gray-500 px-4 py-3 text-sm'>{$memberInfo['views']}</td>";
-                  echo "<td class='th_sty text-gray-500 px-4 py-3 text-sm'><a href='history.php?boardID={$memberInfo['boardID']}' target = '_blank' onclick='window.open(this.href,'팝업창','width=100, height=100');'>log<a/></td>";
+                  echo "<td class='th_sty text-gray-500 px-4 py-3 text-sm'><a href='history.php?boardID={$memberInfo['boardID']}' target = '_blank' onclick='window.open(this.href,'팝업창','width=100, height=100');'>";
+                  echo "<em class='fa fa-history'></em>";
+                  echo "<a/></td>";
                   echo "</tr>";
                 }
               }else{

@@ -55,10 +55,11 @@ $(function(){ //jquery  달력 UI위젯 datepicker
               <?php
               if(isset($_SESSION['memberID'])){
               ?>
-              <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">회원정보 수정</h1>
+              <h1 style="color:gray" class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">회원정보 수정</h1>
             <?php }else{?>
-              <h1 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">회원 가입</h1>
+              <h1 style="color:gray" class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">회원 가입</h1>
             <?php } ?>
+            <br>
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">E-mail</span>
                 <input style = "background-color : lightgray" type = "email" autocomplete="off" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" name = "userEmail" value = "<?= (isset($memberInfo['email']) ? $memberInfo['email'] : '') ?>" required>
@@ -93,27 +94,15 @@ $(function(){ //jquery  달력 UI위젯 datepicker
                 ?>
                   <input type = "date"  value = "<?=$memberInfo['birthDay']?>" name = "birth">
                   <br><br>
-                  <button class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray"><input type = "submit" value = "수정 정보 저장"/>
-                    <svg
-                    class="w-4 h-4 mr-2"
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  ></svg>
-                  </button>
+                  <button type="submit" style="background:gray" class="w-full items-center px-4 py-2 text-sm font-medium text-white rounded-lg">
+                    수정정보 저장</button>
                 <?php
                 }else{
                  ?>
                 <input type = "date" name = "birth">
                 <br><br>
-                <button class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray"><input type = "submit" value = "가입하기"/>
-                  <svg
-                  class="w-4 h-4 mr-2"
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                ></svg>
-                </button>
+                <button type="submit" style="background:gray" class="w-full items-center px-4 py-2 text-sm font-medium text-white rounded-lg">
+                  회원가입</button>
                 <?php
               }
               ?>

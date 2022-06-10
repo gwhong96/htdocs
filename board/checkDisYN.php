@@ -5,6 +5,9 @@
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
  ?>
 
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+ <link rel="stylesheet" href="./css/tailwind.output.css" />
+
  <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css" />
  <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
  <script type="text/javascript" src="/js/jquery-ui.js"></script>
@@ -25,9 +28,11 @@
   $boardInfo = $result -> fetch_array(MYSQLI_ASSOC);
   ?>
 
-<div id='writepass'>
+<div id='writepass' style="padding-top:100px;padding-left:100px">
 	<form action="" method="post">
- 		<p>비밀번호<input type="password" name="checkPW" /> <input type="submit" value="확인" /></p>
+    <span class="text-gray-700 dark:text-gray-400">Password  </span>
+    <input style="background-color : lightgray" type="password" name="checkPW" />
+    <button type="submit" style = "background:gray;" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg">저장</button>
  	</form>
 </div>
 

@@ -16,6 +16,8 @@
   <script src="./js/init-alpine.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  <script src="https://kit.fontawesome.com/aee31d5c5a.js"></script>
 </head>
 
 <body>
@@ -33,7 +35,7 @@
     if($referer == ''){exit("잘못된 접근입니다.");}
 
     $boardID = $_GET['boardID'];
-    $sql = "SELECT b.title, b.content, m.nickName, b.regTime, b.lastUpdate, b.disYN, b.attach FROM board b ";
+    $sql = "SELECT b.title, b.content, m.memberID, m.nickName, b.regTime, b.lastUpdate, b.disYN FROM board b ";
     $sql .= "JOIN member m on (m.memberID = b.memberID) ";
     $sql .= "WHERE b.boardID = {$boardID} AND b.delYN = 'N'";
 
@@ -58,14 +60,22 @@
             <?php $regTime = date("Y-m-d H:i:s") ?>
             <span style="float:right">Wirten : <?=$contentInfo['regTime']?></span><br>
             <span style="float:right">Modified : <?= $contentInfo['lastUpdate']?></span><br><br><br>
-            <p style="width:80%; color: rgb(64,64,64);padding-bottom:30%"><?=nl2br($contentInfo['content'])?></p>
-            <br><br><br><br>
+            <div style="border: 1px solid #d3d3d3;min-height: 250px;"><?=nl2br($contentInfo['content'])?></div>
+            <br><br>
             <?= "첨부파일 : "?>
+            <br>
       <?php
       if($dataCount2 > 0){//첨부파일이 존재한다면
         for($i = 0; $i < $dataCount2; $i++){//첨부파일 갯수만큼 반복
           $uploadInfo = $result_upload -> fetch_array(MYSQLI_ASSOC);
-          echo "<a href='../upload/{$uploadInfo['fileName']}' download> '{$uploadInfo['originalName']}'";
+          echo "<a href='../upload/{$uploadInfo['fileName']}' download> {$uploadInfo['originalName']}"."</a>";
+
+          if($contentInfo['memberID']==$_SESSION['memberID']){
+              echo "<a href='./deleteFile.php?fileID={$uploadInfo['fileID']}&boardID={$boardID}'> <em class='fa fa-trash-o' style='color:gray;'></em></a><br>";
+          }else{
+            echo "<br>";
+          }
+
         }
       }else{
         echo "첨부파일 없음";
@@ -74,14 +84,16 @@
       </a><br><br>
       <?php
       if($contentInfo['nickName'] == $_SESSION['nickName']){
-        echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button> ";
-        echo "<button type='button' style='background : gray' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./delete.php?boardID={$boardID}'>게시글 삭제</a></button>";
+        echo "<button type='button' style='background :  #6D6E71' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button> ";
+        echo "<button type='button' style='background :  #6D6E71' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./delete.php?boardID={$boardID}'>게시글 삭제</a></button>";
       }
     }else{
       echo "잘못된 접근입니다.";
       echo "<a href = '../board/list.php'>게시판</a>";
       exit;
     }?>
+
+
 <!-- 댓글 입력 -->
   <br><br><br>
 
@@ -98,8 +110,8 @@
             <input type="hidden" value ='0' name = "depth">
             <input type="hidden" value ='<?=$boardID?>' name = "boardID">
             <input type="hidden" value ='0' name = "replyPID">
-            <textarea style = "background : lightgray" name="reply" cols = "40" rows = "5" required></textarea><br>
-            <button style = "background : gray" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">댓글 저장</button>
+            <textarea style = "background : lightgray;width:60%;height:50px" name="reply" required></textarea><br>
+            <button style = "background :  #6D6E71" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">댓글 저장</button>
           </form>
           <br><br>
       <?php
@@ -129,11 +141,11 @@
               }
 
             ?>
-            <button class = 'button1 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background : gray" reply_id="<?=$replyID?>">답글</button>
+            <button class = 'button1 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background :  #6D6E71" reply_id="<?=$replyID?>">답글</button>
             <?php
             if($replyInfo['writerID'] == $_SESSION['memberID'] && $replyInfo['delYN'] == 'N'){?>
-              <button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background : gray" modify_id="<?=$replyID?>">수정</button>
-              <?= "<button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style='background : gray'/><a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a></button>"?>
+              <button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background :  #6D6E71" modify_id="<?=$replyID?>">수정</button>
+              <?= "<button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style='background :  #6D6E71'/><a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a></button>"?>
             <?php }?>
 
 
@@ -147,7 +159,7 @@
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
                 <input type="hidden" value ='<?=$replyID?>' name = "replyPID">
                 <textarea style="background : lightgray" name="reply" cols = "30" rows = "3" required></textarea>
-                <button style = "background : gray" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 저장</button>
+                <button style = "background :  #6D6E71" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 저장</button>
                 <br>
               </form>
 
@@ -155,7 +167,7 @@
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
                 <input type="hidden" value ='<?=$replyID?>' name = "replyID">
                 <textarea style="background : lightgray" name="reply" cols = "30" rows = "3" required><?=$replyInfo['reply']?></textarea>
-                <button style = "background : gray" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 수정</button>
+                <button style = "background : #6D6E71" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 수정</button>
                 <br>
               </form>
               <?php

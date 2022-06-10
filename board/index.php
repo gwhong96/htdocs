@@ -44,26 +44,20 @@
                 <form name = "signIn" method = "post" action = "./signIn.php"><!--입력값 전송 대상 URL-->
                   <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">E-mail</span>
-                    <input type = "email" name = "userEmail" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required/>
+                    <input style = "background:lightgray" type = "email" name = "userEmail" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required/>
                   </label>
 
                   <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">Password</span>
-                    <input type = "password" name = "userPW" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required/>
+                    <input style = "background:lightgray" type = "password" name = "userPW" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required/>
                     <br>
                   </label>
-
-                  <button class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
-                    <input type = "submit" value = "로그인"/>
-                    <svg
-                    class="w-4 h-4 mr-2"
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    ></svg>
-                  </button></br>
+                  <button type="submit" style="background:gray" class="w-full items-center px-4 py-2 text-sm font-medium text-white rounded-lg">
+                    로그인</button>
+                  <br>
                 </form>
-                <button style="background-color : skyblue" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150" onclick="location.href='./signUpForm.php';">회원가입</button>
+                <br>
+                <button style="background-color : gray" class="w-full rounded-lg px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150" onclick="location.href='./signUpForm.php';">회원가입</button>
                 <!-- <a href = "./board/signUpForm.php";>회원가입</a> -->
               </div>
             </div>

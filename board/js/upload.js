@@ -1,7 +1,6 @@
 var fileNo = 0;
 var filesArr = new Array();
 
-// Ver1.
 /* 첨부파일 추가 */
 function addFile(obj){
     var maxFileCnt = 5;   // 첨부파일 최대 개수
@@ -12,28 +11,31 @@ function addFile(obj){
     // 첨부파일 개수 확인
     if (curFileCnt > remainFileCnt) {
         alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
-    } else {
-        for (const file of obj.files) {
-            // 첨부파일 검증
-            if (validation(file)) {
-                // 파일 배열에 담기
-                var reader = new FileReader();
-                reader.onload = function () {
-                    filesArr.push(file);
-                };
-                reader.readAsDataURL(file);
+    }
 
-                // 목록 추가
-                let htmlData = '';
-                htmlData += '<div id="file' + fileNo + '" class="filebox">';
-                htmlData += '   <p class="name">' + file.name + '</p>';
-                htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"> x </a>';
-                htmlData += '</div>';
-                $('.file-list').append(htmlData);
-                fileNo++;
-            } else {
-                continue;
-            }
+    for (var i = 0; i < Math.min(curFileCnt, remainFileCnt); i++) {
+
+        const file = obj.files[i];
+
+        // 첨부파일 검증
+        if (validation(file)) {
+            // 파일 배열에 담기
+            var reader = new FileReader();
+            reader.onload = function () {
+                filesArr.push(file);
+            };
+            reader.readAsDataURL(file)
+
+            // 목록 추가
+            let htmlData = '';
+            htmlData += '<div id="file' + fileNo + '" class="filebox">';
+            htmlData += '   <p class="name">' + file.name + '</p>';
+            htmlData += '   <a class="delete" onclick="deleteFile(' + fileNo + ');"> X </a>';
+            htmlData += '</div>';
+            $('.file-list').append(htmlData);
+            fileNo++;
+        } else {
+            continue;
         }
     }
     // 초기화
@@ -79,10 +81,23 @@ function submitForm() {
     }
 
     $.ajax({
+       url: './write_ok.php',
+       data: formData,
+       processData: false,
+       type: 'POST',
+       success: function ( data ) {
+           alert( data );
+       }
+   });
+
+    var data = formdata.serializer();
+
+    $.ajax({
         method: 'POST',
-        url: '/upload',
+        url: './write_ok.php',
         dataType: 'json',
         data: formData,
+        // data: data,
         async: true,
         timeout: 30000,
         cache: false,
@@ -95,4 +110,6 @@ function submitForm() {
             return;
         }
     })
+
+    return console.log(formData);
 }
