@@ -1,4 +1,5 @@
 <!-- 게시글 작성 및 수정 -->
+
 <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/checkSignSession.php';
@@ -9,6 +10,8 @@
   $content  = $_POST['content'];
   $boardPW  = $_POST['boardPW'];
   $boardPW  = hash('sha256', 'nasmedia'.$boardPW);//게시글 비밀번호 해시암호화
+  // print_r($_FILES['upfile']['name']);
+  // var_dump($_POST);exit;
 
 
   if(isset($_POST['disYN'])){//비공개를 체크해서 N을 post받으면
@@ -53,6 +56,8 @@
 
   $uploadBase = '../upload/';
 
+// 여기서 받는게 문제
+
   foreach ($_FILES['upfile']['name'] as $f => $name) {
 
       $save_dir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
@@ -66,10 +71,10 @@
       $sql_upload =  "INSERT INTO upload_file (boardID, fileName, originalName) ";
       $sql_upload .= "VALUES ('{$boardID}', '{$upfile}', '{$filename}')";
       $result_upload = $dbConnect->query($sql_upload);
-
     }
 
   if($result){
+
     echo "<script type='text/javascript'>alert('저장 완료');window.location = './list.php';</script>";
     exit;
   }

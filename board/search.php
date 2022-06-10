@@ -2,7 +2,7 @@
 <br><br>
 <form name = "search" method = "get" action = "./list.php">
   <br>
-  <input style = "background:lightgray" class="items-center px-3 py-1 text-sm font-medium rounded-lg" value="<?= (isset($searchKeyword) ? $searchKeyword : '') ?>" type = "text" name = "searchKeyword" placeholder = "검색어 입력" required/>
+  <input style = "background:#A7A9AC" class="items-center px-3 py-1 text-sm font-medium rounded-lg" value="<?= (isset($searchKeyword) ? $searchKeyword : '') ?>" type = "text" name = "searchKeyword" placeholder = "검색어 입력" required/>
   <select style = "background:gray" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" name = "option" required>
   <option value = "title">제목</option>
   <option value = "content">내용</option>

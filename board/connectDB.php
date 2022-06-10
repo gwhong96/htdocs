@@ -1,4 +1,4 @@
-<!-- DB연결 -->
+
 <?php
   $host       = "localhost";
   $user       = "root";

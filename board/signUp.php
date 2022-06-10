@@ -14,9 +14,7 @@
   $birth     = $_POST['birth'];
 
   function goSignUpPage($alert){//입력값이 적합하지 않을 시 다시 회원가입 페이지로 이동
-    // echo $alert.'<br>';
-    // echo "<a href = './signUpForm.php'>다시 입력</a>";
-    // echo "<button onclick='history.back()'>다시 입력하기</button>";
+    
     echo "<script type='text/javascript'>alert('{$alert}');window.location = './signUpForm.php';</script>";
     return;
   }
