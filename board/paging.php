@@ -55,8 +55,11 @@
   }//마지막 페이지 표시가 실제 페이지 최대 갯수보다 많을경우
 
   for($i = $startPage; $i <= $lastPage; $i++){
-    echo "<a href = './list.php?page={$i}{$link}'>{$i}</a>";
-
+    $style='';
+    if($page==$i){
+      $style="style='color:#CE181E;font-weight: bold;'";
+    }
+    echo "<a {$style} href = './list.php?page={$i}{$link}'>{$i}</a>";
   }
   if($page != $totalPage){//다음 페이지가 있다면
     $nextPage = $page + 1;

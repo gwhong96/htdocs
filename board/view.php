@@ -21,9 +21,10 @@
 </head>
 
 <body>
+<div style="padding-left:250px">
   <h3><a href="./list.php"><img src="../img/logo.svg"></a></h3>
   <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">VIEW</h4>
-
+</div>
 <?php
   if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){//이전 페이지의 url정보
     $referer=$_SERVER['HTTP_REFERER'];
@@ -51,16 +52,16 @@
       $v_sql = "UPDATE board set views = views + 1 where boardID = {$boardID} ";//조회수 증가용 쿼리
       $v_result = $dbConnect -> query($v_sql);
       ?>
-      <div class="flex items-center p-6 bg-gray-50 dark:bg-gray-900">
+      <div class="flex items-center p-6 dark:bg-gray-900 shadow-xs">
         <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg dark:bg-gray-800">
-          <div class="w-full" style="width:80%">
+          <div class="w-full" style="">
             <span style="color: rgb(64,64,64);" class="mb-4 text-2xl font-semibold text-gray-700"> <?=$contentInfo['title']?> </span>
             <span class="text-xs text-gray-700">by</span>
             <span class="text-xl" style="color:gray"><?=$contentInfo['nickName']?></span> <br><br>
             <?php $regTime = date("Y-m-d H:i:s") ?>
-            <span style="float:right">Wirten : <?=$contentInfo['regTime']?></span><br>
+            <span style="float:right">Writen : <?=$contentInfo['regTime']?></span><br>
             <span style="float:right">Modified : <?= $contentInfo['lastUpdate']?></span><br><br><br>
-            <div style="border: 1px solid #d3d3d3;min-height: 250px;"><?=nl2br($contentInfo['content'])?></div>
+            <div style="padding:7px;border: 1px solid #d3d3d3;min-height: 250px;"><?=nl2br($contentInfo['content'])?></div>
             <br><br>
             <?= "첨부파일 : "?>
             <br>
@@ -84,8 +85,8 @@
       </a><br><br>
       <?php
       if($contentInfo['nickName'] == $_SESSION['nickName']){
-        echo "<button type='button' style='background :  #6D6E71' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button> ";
-        echo "<button type='button' style='background :  #6D6E71' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./delete.php?boardID={$boardID}'>게시글 삭제</a></button>";
+        echo "<button type='button' style='background :  #3687a8' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./write.php?boardID={$boardID}'>게시글 수정</a></button> ";
+        echo "<button type='button' style='background :  #fd0000' class='items-center px-2 py-1 text-sm font-medium text-white rounded-lg'/><a href='./delete.php?boardID={$boardID}'>게시글 삭제</a></button>";
       }
     }else{
       echo "잘못된 접근입니다.";
@@ -110,7 +111,7 @@
             <input type="hidden" value ='0' name = "depth">
             <input type="hidden" value ='<?=$boardID?>' name = "boardID">
             <input type="hidden" value ='0' name = "replyPID">
-            <textarea style = "background : lightgray;width:60%;height:50px" name="reply" required></textarea><br>
+            <textarea style = "padding : 7px;background : #EEE;width:100%;height:80px" name="reply" required></textarea><br>
             <button style = "background :  #6D6E71" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">댓글 저장</button>
           </form>
           <br><br>
@@ -144,8 +145,8 @@
             <button class = 'button1 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background :  #6D6E71" reply_id="<?=$replyID?>">답글</button>
             <?php
             if($replyInfo['writerID'] == $_SESSION['memberID'] && $replyInfo['delYN'] == 'N'){?>
-              <button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background :  #6D6E71" modify_id="<?=$replyID?>">수정</button>
-              <?= "<button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style='background :  #6D6E71'/><a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a></button>"?>
+              <button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style="background : #3687a8;" modify_id="<?=$replyID?>">수정</button>
+              <?= "<button class = 'button2 items-center px-2 py-1 text-sm font-medium text-white rounded-lg' style='background :  #fd0000'/><a href = './reply_delete.php?replyID={$replyID}&boardID={$boardID}'>삭제</a></button>"?>
             <?php }?>
 
 
@@ -158,7 +159,7 @@
                 <input type="hidden" value ='<?=$depth?>' name = "depth">
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
                 <input type="hidden" value ='<?=$replyID?>' name = "replyPID">
-                <textarea style="background : lightgray" name="reply" cols = "30" rows = "3" required></textarea>
+                <textarea style="background : #EEE" name="reply" cols = "30" rows = "3" required></textarea>
                 <button style = "background :  #6D6E71" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 저장</button>
                 <br>
               </form>
@@ -166,7 +167,7 @@
               <form id = "replyModify<?=$replyID?>" method = "post" action="./reply_modify.php" style="display:none">
                 <input type="hidden" value ='<?=$boardID?>' name = "boardID">
                 <input type="hidden" value ='<?=$replyID?>' name = "replyID">
-                <textarea style="background : lightgray" name="reply" cols = "30" rows = "3" required><?=$replyInfo['reply']?></textarea>
+                <textarea style="background : #EEE" name="reply" cols = "30" rows = "3" required><?=$replyInfo['reply']?></textarea>
                 <button style = "background : #6D6E71" class="items-center px-2 py-1 text-sm font-medium text-white rounded-lg" type = "submit">답글 수정</button>
                 <br>
               </form>

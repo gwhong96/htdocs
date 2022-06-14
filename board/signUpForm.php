@@ -14,8 +14,12 @@ $(function(){ //jquery  달력 UI위젯 datepicker
       $("#birthUI").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
   });
 </script> -->
-<h3><a href="./list.php"><img src="../img/logo.svg"/></a></h3><br>
+
 <body>
+  <div style="padding-left:250px">
+    <h3><a href="./list.php"><img src="../img/logo.svg"/></a></h3>
+
+
   <?php
   include $_SERVER['DOCUMENT_ROOT'].'./board/session.php';
   include $_SERVER['DOCUMENT_ROOT'].'./board/connectDB.php';
@@ -25,9 +29,9 @@ $(function(){ //jquery  달력 UI위젯 datepicker
     $sql = "SELECT memberID, nickName, memberPW, email, birthDay FROM member WHERE memberID = {$memberID}";
     $result = $dbConnect -> query($sql);
     $memberInfo = $result -> fetch_array(MYSQLI_ASSOC);
-    echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>회원정보 수정</h4>";
+    echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>회원정보 수정</h4></div>";
   }else{//회원가입일 때
-    echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>회원가입</h4>";
+    echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>회원가입</h4></div>";
   }
    ?>
 
