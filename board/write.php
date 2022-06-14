@@ -26,7 +26,8 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
-  <h3><a href="./list.php"><img src="../img/logo.svg"/></a></h3>
+  <div style="padding-left:250px;">
+    <h3><a href="./list.php"><img src="../img/logo.svg"/></a></h3>
   <?php
   $boardInfo = array();
   $boardID = '';
@@ -57,20 +58,21 @@
     echo "<h4 class='mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300'>WRITE</h4>";
   }
    ?>
-<div class="flex items-center justify-center p-6 sm:p-12">
-   <div class="w-full" style = "padding-left:20%">
+ </div>
+<div class="items-center justify-center p-6 sm:p-12 shadow-xs">
+   <div class="h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg dark:bg-gray-800">
    <!-- <form name = "boardWrite"> -->
    <form name = "boardWrite" method="POST" action="write_ok.php" enctype="multipart/form-data">
      <input type="hidden" value='<?=$boardID?>' name = "boardID">
        <span class="text-gray-700 dark:text-gray-400">Title</span>
      <br>
-     <input style = "background-color : lightgray" type = "text" name = "title" class="block mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
+     <input style = "background-color : #eee;width:100%;" type = "text" name = "title" class="block mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" required value = "<?= (isset($boardInfo['title']) ? $boardInfo['title'] : '') ?>"></input>
      <br>
 
      <span class="text-gray-700 dark:text-gray-400">Content</span>
      <br>
      <label class="block text-sm">
-     <textarea name="content" id="ir1" rows="10" cols="100"><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
+     <textarea name="content" id="ir1" rows="10" cols="100" style="width:100%"><?= (isset($boardInfo['content']) ? $boardInfo['content'] : '') ?></textarea>
     </label>
      <br>
      <span class="text-gray-700 dark:text-gray-400">Upload File</span>
@@ -99,8 +101,8 @@
      ?>
      <input type = "checkbox" name = "disYN" value = "N" <?= $checkYN ?>/><br>
      <span class = "text-gray-700 dark:text-gray-400">Password</span>
-     <input style = "background-color : lightgray" type = "password" name = "boardPW">
-     <button id="savebutton" type="submit" style = "background:gray; float:right; margin-right:32%" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg">저장</button>
+     <input style = "background-color : #eee" type = "password" name = "boardPW">
+     <button id="savebutton" type="submit" style = "background:gray; float:right;" class="items-center px-4 py-2 text-sm font-medium text-white rounded-lg">저장</button>
      <!-- onClick="submitForm(this.form)" -->
    </form>
 </div>
